@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" role="img" aria-labelledby="title desc">
+  <title id="title">IsolaWatt logo</title>
+  <desc id="desc">A sun above a tilted solar panel.</desc>
+  <rect width="108" height="108" rx="24" fill="#F5A623"/>
+  <path fill="#FFF5D4" d="M54 18a2.5 2.5 0 0 1 2.5 2.5v9a2.5 2.5 0 1 1-5 0v-9A2.5 2.5 0 0 1 54 18ZM54 78a2.5 2.5 0 0 1 2.5 2.5v9a2.5 2.5 0 1 1-5 0v-9A2.5 2.5 0 0 1 54 78ZM22.5 51.5h9a2.5 2.5 0 1 1 0 5h-9a2.5 2.5 0 0 1 0-5ZM76.5 51.5h9a2.5 2.5 0 1 1 0 5h-9a2.5 2.5 0 0 1 0-5ZM33.9 28.3a2.5 2.5 0 0 1 3.5 0l6.4 6.4a2.5 2.5 0 1 1-3.5 3.5l-6.4-6.4a2.5 2.5 0 0 1 0-3.5ZM67.7 62.1a2.5 2.5 0 0 1 3.5 0l6.4 6.4a2.5 2.5 0 1 1-3.5 3.5l-6.4-6.4a2.5 2.5 0 0 1 0-3.5ZM74.1 28.3a2.5 2.5 0 0 1 3.5 3.5l-6.4 6.4a2.5 2.5 0 1 1-3.5-3.5l6.4-6.4ZM40.3 62.1a2.5 2.5 0 0 1 3.5 3.5l-6.4 6.4a2.5 2.5 0 1 1-3.5-3.5l6.4-6.4Z"/>
+  <circle cx="54" cy="48" r="18" fill="#FFE36A"/>
+  <path fill="#0F4C5C" d="m30 70 52-6-5 18-52 6z"/>
+  <path fill="#1D7A8C" d="m28 58 52-6-5 18-52 6z"/>
+  <path fill="none" stroke="#CDEEF3" stroke-linecap="round" stroke-width="1.8" d="m34 60.5 41-4.8M32.5 66.5l41-4.8M31 72.5l41-4.8"/>
+</svg>
