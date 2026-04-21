@@ -13,6 +13,8 @@ Files:
 - `index.html`: simple app landing/support page.
 - `privacy/index.html`: public Privacy Policy for Google Play.
 - `assets/isolawatt-logo.svg`: reusable app/site logo.
+- `assets/isolawatt-logo-512.png`: PNG logo.
+- `assets/isolawatt-logo-512.jpg`: JPEG logo with white background.
 - `styles.css`: shared site styling.
 - `CNAME`: useful if hosting through GitHub Pages.
 - `robots.txt` and `sitemap.xml`: basic crawler metadata.
