@@ -1,15 +1,56 @@
 <!doctype html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IsolaWatt Solar Sizer</title>
-  <meta name="description" content="Offline off-grid solar sizing for battery, PV array, inverter, and controller planning.">
+  <title>IsolaWatt — Calcolatore fotovoltaico off-grid per camper, barche e baite</title>
+  <meta name="description" content="Calcola gratis batteria, pannelli, inverter e regolatore per un impianto solare off-grid. Ideale per camper, barche, baite e case isolate.">
   <meta property="og:image" content="https://isolawatt.com/assets/isolawatt-logo-512.png">
   <link rel="canonical" href="https://isolawatt.com/">
   <link rel="icon" href="assets/isolawatt-logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/isolawatt-logo-512.png">
   <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Questo calcolo sostituisce un progetto tecnico?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. IsolaWatt fornisce una stima preliminare per orientare il dimensionamento. Per installazioni definitive, normative o ad alto rischio serve un tecnico qualificato."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posso usarlo per un camper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Si. Il calcolatore include un caso d'uso camper e permette di stimare batteria, pannelli, inverter e regolatore MPPT partendo dal consumo giornaliero."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Perché LiFePO4 e AGM danno risultati diversi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Perché le batterie LiFePO4 tollerano in genere una profondità di scarica maggiore rispetto alle AGM. A parità di consumo, una batteria AGM richiede quindi più capacità nominale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Il sito funziona senza account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Si. La homepage e il calcolatore funzionano nel browser senza account, backend, database, cookie, analytics o moduli di contatto."
+          }
+        }
+      ]
+    }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -17,75 +58,299 @@
       <img class="brand-mark" src="assets/isolawatt-logo.svg" alt="" width="38" height="38">
       <span>IsolaWatt</span>
     </a>
-    <nav class="site-nav" aria-label="Main navigation">
+    <nav class="site-nav" aria-label="Navigazione principale">
+      <a href="#calcolatore">Calcolatore</a>
+      <a href="#come-funziona">Come funziona</a>
       <a href="privacy/">Privacy</a>
-      <a href="mailto:support@isolawatt.com">Support</a>
+      <a href="mailto:support@isolawatt.com">Supporto</a>
     </nav>
   </header>
 
   <main>
-    <section class="intro">
-      <div class="intro-copy">
-        <img class="hero-logo" src="assets/isolawatt-logo.svg" alt="" width="92" height="92">
-        <p class="eyebrow">Android utility</p>
-        <h1>IsolaWatt Solar Sizer</h1>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">IsolaWatt Solar Sizer</p>
+        <h1 id="hero-title">Calcola pannelli, batteria e inverter per il tuo impianto solare off-grid</h1>
         <p class="lead">
-          A simple offline calculator for preliminary off-grid solar sizing.
-          It helps estimate battery capacity, PV array size, inverter minimum,
-          and charge controller current from local project inputs.
+          Uno strumento gratuito per stimare un kit solare per camper, barca, baita o casa isolata.
         </p>
         <div class="actions">
-          <a class="button primary" href="privacy/">Privacy Policy</a>
-          <a class="button secondary" href="mailto:support@isolawatt.com">Contact Support</a>
+          <a class="button primary" href="#calcolatore">Apri il calcolatore</a>
+          <a class="button secondary" href="#risultati">Vedi esempio</a>
         </div>
+        <p class="trust-note">Stima preliminare, non certificazione tecnica.</p>
       </div>
 
-      <div class="app-snapshot" aria-label="App capability summary">
+      <aside class="hero-panel" aria-label="Esempio di stima IsolaWatt">
         <div class="snapshot-header">
-          <span>Local project</span>
-          <strong>Offline</strong>
+          <span>Weekend in camper</span>
+          <strong>100% locale</strong>
         </div>
         <div class="metric-grid">
           <div>
-            <span class="metric-label">Battery</span>
-            <strong>Wh / Ah</strong>
+            <span class="metric-label">Consumo</span>
+            <strong>1.200 Wh/giorno</strong>
           </div>
           <div>
-            <span class="metric-label">PV array</span>
-            <strong>Wp</strong>
+            <span class="metric-label">Autonomia</span>
+            <strong>2 giorni</strong>
           </div>
           <div>
-            <span class="metric-label">Controller</span>
-            <strong>A</strong>
+            <span class="metric-label">Sistema</span>
+            <strong>12 V</strong>
           </div>
           <div>
-            <span class="metric-label">Inverter</span>
-            <strong>W</strong>
+            <span class="metric-label">Batteria</span>
+            <strong>LiFePO4</strong>
           </div>
         </div>
-        <div class="snapshot-note">
-          Runs on-device. No account, ads, analytics, or remote backend in the current release.
-        </div>
+        <p class="snapshot-note">Nessun account, cookie, analytics, pixel o backend remoto.</p>
+      </aside>
+    </section>
+
+    <section class="calculator-section" id="calcolatore" aria-labelledby="calculator-title">
+      <div class="section-heading">
+        <p class="eyebrow">Dimensionamento rapido</p>
+        <h2 id="calculator-title">Calcolatore fotovoltaico off-grid</h2>
+        <p>
+          Inserisci il consumo giornaliero e le condizioni di utilizzo: il calcolo avviene solo nel browser.
+        </p>
+      </div>
+
+      <div class="calculator-layout">
+        <form class="calculator-form" id="solar-form" novalidate>
+          <div class="form-grid">
+            <label class="field" for="useCase">
+              <span>Uso principale</span>
+              <select id="useCase" name="useCase">
+                <option value="camper">Camper</option>
+                <option value="barca">Barca</option>
+                <option value="baita">Baita</option>
+                <option value="casa isolata">Casa isolata</option>
+              </select>
+            </label>
+
+            <label class="field" for="systemVoltage">
+              <span>Tensione sistema</span>
+              <select id="systemVoltage" name="systemVoltage">
+                <option value="12">12 V</option>
+                <option value="24">24 V</option>
+                <option value="48">48 V</option>
+              </select>
+            </label>
+
+            <label class="field" for="dailyWh">
+              <span>Consumo giornaliero</span>
+              <input id="dailyWh" name="dailyWh" type="number" min="1" step="50" value="1200" inputmode="decimal" aria-describedby="dailyWh-help">
+              <small id="dailyWh-help">Wh/giorno</small>
+            </label>
+
+            <label class="field" for="autonomyDays">
+              <span>Giorni di autonomia</span>
+              <input id="autonomyDays" name="autonomyDays" type="number" min="0.5" step="0.5" value="2" inputmode="decimal">
+            </label>
+
+            <label class="field" for="peakSunHours">
+              <span>Ore di sole equivalenti</span>
+              <input id="peakSunHours" name="peakSunHours" type="number" min="0.5" step="0.5" value="4" inputmode="decimal">
+            </label>
+
+            <label class="field" for="batteryType">
+              <span>Tipo batteria</span>
+              <select id="batteryType" name="batteryType">
+                <option value="lifepo4">LiFePO4</option>
+                <option value="agm">AGM</option>
+              </select>
+            </label>
+
+            <label class="field" for="maxDepthOfDischarge">
+              <span>Profondità di scarica max</span>
+              <input id="maxDepthOfDischarge" name="maxDepthOfDischarge" type="number" min="0.1" max="0.95" step="0.05" value="0.8" inputmode="decimal">
+            </label>
+
+            <label class="field" for="inverterLoadW">
+              <span>Potenza contemporanea max</span>
+              <input id="inverterLoadW" name="inverterLoadW" type="number" min="1" step="50" value="800" inputmode="decimal">
+              <small>W</small>
+            </label>
+
+            <label class="field" for="safetyMargin">
+              <span>Margine di sicurezza</span>
+              <input id="safetyMargin" name="safetyMargin" type="number" min="1" step="0.05" value="1.25" inputmode="decimal">
+            </label>
+          </div>
+
+          <div class="form-note">
+            <strong>Regolatore MPPT:</strong>
+            <span>la tensione di calcolo è uguale alla tensione sistema selezionata.</span>
+          </div>
+
+          <div class="calculator-actions">
+            <button class="button primary" type="button" id="copyResults">Copia risultati</button>
+            <button class="button secondary" type="button" id="printResults">Stampa / salva PDF</button>
+            <button class="button ghost" type="button" id="resetExample">Reset esempio camper weekend</button>
+          </div>
+
+          <p class="form-feedback" id="formFeedback" role="status" aria-live="polite"></p>
+        </form>
+
+        <section class="results-panel" id="risultati" aria-labelledby="results-title">
+          <div class="results-heading">
+            <p class="eyebrow">Report rapido</p>
+            <h2 id="results-title">Risultati stimati</h2>
+            <p id="resultSummary">Esempio pronto per un camper weekend.</p>
+          </div>
+
+          <div class="results-grid" aria-live="polite">
+            <article class="result-card">
+              <span class="metric-label">Consumo con margine</span>
+              <strong id="adjustedDailyWh">-</strong>
+              <p>Wh/giorno usati per dimensionare il kit.</p>
+            </article>
+            <article class="result-card highlight">
+              <span class="metric-label">Batteria consigliata</span>
+              <strong id="batteryResult">-</strong>
+              <p id="batteryDetail">Capacità nominale stimata.</p>
+            </article>
+            <article class="result-card">
+              <span class="metric-label">Pannelli consigliati</span>
+              <strong id="pvResult">-</strong>
+              <p>Potenza fotovoltaica minima arrotondata.</p>
+            </article>
+            <article class="result-card">
+              <span class="metric-label">Inverter consigliato</span>
+              <strong id="inverterResult">-</strong>
+              <p>Potenza minima con margine sul carico massimo.</p>
+            </article>
+            <article class="result-card">
+              <span class="metric-label">Regolatore MPPT consigliato</span>
+              <strong id="controllerResult">-</strong>
+              <p id="controllerDetail">Corrente minima sul lato batteria.</p>
+            </article>
+            <article class="result-card">
+              <span class="metric-label">Margine di sicurezza</span>
+              <strong id="marginResult">-</strong>
+              <p>Applicato a consumo, inverter e regolatore.</p>
+            </article>
+          </div>
+
+          <div class="report-box" id="report" tabindex="-1">
+            <h3>Mini report copiabile</h3>
+            <pre id="reportText">Compila i dati per generare il report.</pre>
+          </div>
+
+          <div class="technical-note">
+            <h3>Note pratiche</h3>
+            <p id="practicalNotes">
+              Verifica sempre tensioni, sezioni dei cavi, fusibili, protezioni, temperatura e compatibilità dei componenti scelti.
+            </p>
+            <p class="disclaimer" id="technicalDisclaimer">
+              Disclaimer tecnico: questa è una stima preliminare e non sostituisce un progetto elettrico o una verifica normativa.
+            </p>
+          </div>
+        </section>
       </div>
     </section>
 
-    <section class="content-band">
+    <section class="content-band" id="come-funziona" aria-labelledby="how-title">
       <div class="section-heading">
-        <h2>What It Does</h2>
-        <p>IsolaWatt is built for quick estimates and field planning, not final engineering certification.</p>
+        <p class="eyebrow">Metodo trasparente</p>
+        <h2 id="how-title">Come dimensionare batteria e pannelli</h2>
+        <p>
+          Il calcolatore parte dal fabbisogno giornaliero, applica un margine di sicurezza e stima capacità batteria,
+          potenza fotovoltaica, inverter e regolatore MPPT.
+        </p>
       </div>
       <div class="feature-grid">
         <article>
-          <h3>Local projects</h3>
-          <p>Create, save, and reopen sizing projects directly on the device.</p>
+          <h3>1. Consumo giornaliero</h3>
+          <p>Somma i Wh/giorno dei dispositivi che vuoi alimentare e imposta un margine realistico.</p>
         </article>
         <article>
-          <h3>Load-based sizing</h3>
-          <p>Enter appliance quantity, watts, and daily hours to estimate demand.</p>
+          <h3>2. Autonomia e batteria</h3>
+          <p>I giorni senza sole e la profondità di scarica determinano la capacità nominale richiesta.</p>
         </article>
         <article>
-          <h3>Transparent method</h3>
-          <p>Review the formulas and assumptions used by the app before relying on results.</p>
+          <h3>3. Pannelli e MPPT</h3>
+          <p>Le ore di sole equivalenti aiutano a stimare i Wp necessari e la corrente minima del regolatore.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="use-cases" aria-labelledby="use-cases-title">
+      <div class="section-heading">
+        <p class="eyebrow">Applicazioni tipiche</p>
+        <h2 id="use-cases-title">Esempi per camper, barca, baita e casa isolata</h2>
+        <p>
+          Ogni scenario cambia per consumi, spazio disponibile, autonomia desiderata e tensione del sistema.
+        </p>
+      </div>
+      <div class="case-grid">
+        <article>
+          <h3>Camper</h3>
+          <p>Frigo, luci, pompa acqua, ricarica telefoni e piccoli inverter per weekend o viaggi lunghi.</p>
+        </article>
+        <article>
+          <h3>Barca</h3>
+          <p>Servizi di bordo, elettronica, autopilota leggero e ricarica batterie in rada.</p>
+        </article>
+        <article>
+          <h3>Baita</h3>
+          <p>Illuminazione, router, piccoli elettrodomestici e autonomia maggiore in zone isolate.</p>
+        </article>
+        <article>
+          <h3>Casa isolata</h3>
+          <p>Carichi piu importanti, sistemi a 24 V o 48 V e maggiore attenzione a protezioni e progetto.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="checklist-section" aria-labelledby="steps-title">
+      <div class="section-heading">
+        <p class="eyebrow">Prossimi step</p>
+        <h2 id="steps-title">Checklist componenti</h2>
+        <p>Dopo la stima, verifica i componenti reali prima dell'acquisto o dell'installazione.</p>
+      </div>
+      <ul class="checklist">
+        <li>Pannelli FV con tensione e corrente compatibili con il regolatore MPPT.</li>
+        <li>Batteria con BMS, capacità utile e corrente di scarica adeguate.</li>
+        <li>Inverter sinusoidale dimensionato sul picco dei carichi contemporanei.</li>
+        <li>Fusibili, sezionatori, cavi e connettori adatti alla corrente prevista.</li>
+        <li>Supporti, ventilazione, protezione meteo e accessibilità per manutenzione.</li>
+      </ul>
+    </section>
+
+    <section class="monetization" aria-labelledby="monetization-title">
+      <div>
+        <p class="eyebrow">In arrivo</p>
+        <h2 id="monetization-title">Vuoi una guida pratica completa?</h2>
+        <p>Presto disponibile: Report IsolaWatt PDF.</p>
+        <p>Prossimamente: report PDF completo, checklist componenti e guida pratica.</p>
+        <!-- TODO: inserire link Gumroad o Stripe Payment Link quando disponibile. -->
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title">Domande frequenti</h2>
+      </div>
+      <div class="faq-list">
+        <article>
+          <h3>Questo calcolo sostituisce un progetto tecnico?</h3>
+          <p>No. E una stima preliminare per orientare il dimensionamento, non una certificazione tecnica.</p>
+        </article>
+        <article>
+          <h3>Posso usarlo per un camper?</h3>
+          <p>Si. E pensato anche per camper, van e piccoli impianti off-grid mobili.</p>
+        </article>
+        <article>
+          <h3>Perché LiFePO4 e AGM danno risultati diversi?</h3>
+          <p>La profondità di scarica utile cambia: LiFePO4 usa piu capacità nominale rispetto ad AGM.</p>
+        </article>
+        <article>
+          <h3>Il sito funziona senza account?</h3>
+          <p>Si. Funziona senza account, backend, database, cookie, analytics o tracking.</p>
         </article>
       </div>
     </section>
@@ -93,7 +358,7 @@
 
   <footer class="site-footer">
     <span>IsolaWatt Solar Sizer</span>
-    <a href="privacy/">Privacy Policy</a>
+    <a href="privacy/">Privacy</a>
     <a href="mailto:support@isolawatt.com">support@isolawatt.com</a>
   </footer>
 </body>
