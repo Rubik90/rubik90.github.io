@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>IsolaWatt — Calcolatore fotovoltaico off-grid per camper, barche e baite</title>
-  <meta name="description" content="Calcola gratis batteria, pannelli, inverter e regolatore per un impianto solare off-grid. Ideale per camper, barche, baite e case isolate.">
+  <meta name="description" content="Calcola gratis consumi, batteria, pannelli, inverter e regolatore MPPT per un impianto solare off-grid. Ideale per camper, barche, baite e case isolate.">
   <meta property="og:image" content="https://isolawatt.com/assets/isolawatt-logo-512.png">
   <link rel="canonical" href="https://isolawatt.com/">
   <link rel="icon" href="assets/isolawatt-logo.svg" type="image/svg+xml">
@@ -229,7 +229,7 @@
                 </select>
               </label>
 
-              <label class="field" for="dailyWh">
+              <label class="field advanced-only" for="dailyWh">
                 <span>Consumo giornaliero</span>
                 <input id="dailyWh" name="dailyWh" type="number" min="1" step="10" value="0" inputmode="decimal" aria-describedby="dailyWh-help">
                 <small id="dailyWh-help">Aggiornato dai carichi; modificabile per modalità rapida.</small>
@@ -420,6 +420,10 @@
           <div id="reportLoads"></div>
         </section>
         <section>
+          <h3>Parametri usati</h3>
+          <div id="reportParameters"></div>
+        </section>
+        <section>
           <h3>Risultati</h3>
           <div id="reportResults"></div>
         </section>
@@ -441,6 +445,7 @@
           <h3>Disclaimer</h3>
           <p>Stima preliminare per orientare il dimensionamento. Non sostituisce un progetto elettrico, una certificazione tecnica o una verifica normativa.</p>
         </section>
+        <footer class="report-footer">isolawatt.com</footer>
       </article>
     </section>
 
@@ -465,6 +470,28 @@
         <article>
           <h3>3. Verifica pannelli e MPPT</h3>
           <p>Ore di sole e perdite determinano i Wp; la tensione sistema influenza la corrente del regolatore.</p>
+        </article>
+      </div>
+      <div class="seo-guide">
+        <article>
+          <h3>Come stimare i consumi partendo dai dispositivi</h3>
+          <p>Per ogni dispositivo indica potenza in watt e ore di utilizzo al giorno. Il frigo va stimato con prudenza perché può essere uno dei carichi più importanti in camper, barca o baita.</p>
+        </article>
+        <article>
+          <h3>Perché i carichi AC pesano di più</h3>
+          <p>I dispositivi AC passano dall'inverter: una parte dell'energia si perde nella conversione. Per questo un laptop o un piccolo elettrodomestico AC richiede più Wh dalla batteria rispetto allo stesso carico DC.</p>
+        </article>
+        <article>
+          <h3>Differenza tra 12 V, 24 V e 48 V</h3>
+          <p>Il 12 V è comune su camper e piccole barche. Con consumi più alti, 24 V o 48 V riducono la corrente sui cavi e rendono più gestibili inverter, fusibili e regolatori.</p>
+        </article>
+        <article>
+          <h3>LiFePO4 vs AGM</h3>
+          <p>LiFePO4 permette in genere una profondità di scarica maggiore e richiede meno capacità nominale. AGM può essere più conservativa: a parità di autonomia serve più batteria.</p>
+        </article>
+        <article>
+          <h3>Errori comuni</h3>
+          <p>Sottostimare il frigo, ignorare le perdite dell'inverter, usare poche ore sole, scegliere cavi sottodimensionati o non verificare fusibili e protezioni porta a impianti poco affidabili.</p>
         </article>
       </div>
     </section>

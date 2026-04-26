@@ -13,6 +13,7 @@
     peakSunHours: 4,
     batteryType: "lifepo4",
     maxDepthOfDischarge: 0.8,
+    depthOfDischargeManual: false,
     inverterLoadW: 800,
     safetyMargin: 1.25,
     inverterEfficiency: 0.9,
@@ -40,6 +41,7 @@
       systemVoltage: 12,
       autonomyDays: 2,
       peakSunHours: 4,
+      batteryType: "lifepo4",
       inverterLoadW: 600,
       loads: [
         load("Luci LED", 1, 20, 4, "DC", true),
@@ -55,11 +57,12 @@
       systemVoltage: 12,
       autonomyDays: 2,
       peakSunHours: 4,
+      batteryType: "lifepo4",
       inverterLoadW: 800,
       loads: [
         load("Frigo 12V", 1, 45, 12, "DC", true),
         load("Luci LED", 1, 20, 4, "DC", true),
-        load("Smartphone", 1, 15, 2, "DC", false),
+        load("Smartphone", 2, 15, 2, "DC", false),
         load("Pompa acqua", 1, 45, 0.3, "DC", true),
         load("Laptop", 1, 60, 2, "AC", false)
       ]
@@ -70,6 +73,7 @@
       systemVoltage: 12,
       autonomyDays: 2,
       peakSunHours: 4.5,
+      batteryType: "lifepo4",
       inverterLoadW: 700,
       loads: [
         load("Frigo pozzetto", 1, 50, 12, "DC", true),
@@ -85,13 +89,14 @@
       systemVoltage: 24,
       autonomyDays: 2,
       peakSunHours: 3.5,
+      batteryType: "lifepo4",
       inverterLoadW: 1000,
       loads: [
-        load("Luci LED baita", 1, 35, 5, "DC", true),
-        load("Router", 1, 12, 8, "DC", false),
-        load("Frigo piccolo", 1, 60, 10, "AC", true),
-        load("Pompa acqua", 1, 120, 0.4, "AC", true),
-        load("Laptop", 1, 65, 3, "AC", false)
+        load("Luci LED", 1, 40, 5, "DC", true),
+        load("Router", 1, 12, 24, "DC", false),
+        load("Frigo piccolo", 1, 70, 10, "AC", true),
+        load("Laptop", 1, 60, 3, "AC", false),
+        load("Piccoli elettrodomestici", 1, 300, 0.5, "AC", false)
       ]
     },
     "casa-essenziale": {
@@ -100,6 +105,7 @@
       systemVoltage: 48,
       autonomyDays: 3,
       peakSunHours: 3.5,
+      batteryType: "lifepo4",
       inverterLoadW: 1800,
       loads: [
         load("Frigo efficiente", 1, 85, 10, "AC", true),
@@ -115,6 +121,7 @@
       systemVoltage: 12,
       autonomyDays: 1,
       peakSunHours: 4,
+      batteryType: "lifepo4",
       inverterLoadW: 300,
       loads: [
         load("Smartphone", 2, 15, 2, "DC", true),
@@ -189,6 +196,7 @@
     reportMeta: document.getElementById("reportMeta"),
     reportScenario: document.getElementById("reportScenario"),
     reportLoads: document.getElementById("reportLoads"),
+    reportParameters: document.getElementById("reportParameters"),
     reportResults: document.getElementById("reportResults"),
     reportComparison: document.getElementById("reportComparison")
   };
@@ -215,6 +223,8 @@
       systemVoltage: preset.systemVoltage,
       autonomyDays: preset.autonomyDays,
       peakSunHours: preset.peakSunHours,
+      batteryType: preset.batteryType,
+      maxDepthOfDischarge: DOD_DEFAULTS[preset.batteryType],
       inverterLoadW: preset.inverterLoadW,
       dailyWhManual: false,
       manualDailyWh: 0,
@@ -303,6 +313,24 @@
     };
   }
 
+  function getLoadWarnings(item) {
+    const warnings = [];
+    const watt = parseNumber(item.watt);
+    const hours = parseNumber(item.hours);
+
+    if (!Number.isFinite(watt) || watt <= 0) {
+      warnings.push("watt non valido");
+    }
+    if (Number.isFinite(hours) && hours > 24) {
+      warnings.push("ore/giorno oltre 24");
+    }
+    if (!Number.isFinite(hours) || hours < 0) {
+      warnings.push("ore/giorno non valide");
+    }
+
+    return warnings;
+  }
+
   function getLoadSummary(settings) {
     let totalWh = 0;
     let dcWh = 0;
@@ -324,7 +352,8 @@
       const row = {
         ...item,
         rawWh: contribution.rawWh,
-        contributionWh: contribution.contributionWh
+        contributionWh: contribution.contributionWh,
+        warnings: getLoadWarnings(item)
       };
       if (!largest || row.contributionWh > largest.contributionWh) {
         largest = row;
@@ -389,9 +418,9 @@
     const batteryWh = roundBatteryWh(requiredBatteryWh);
     const batteryAh = Math.ceil(requiredBatteryWh / settings.systemVoltage);
     const pvWp = ceilTo(adjustedDailyWh / settings.peakSunHours * settings.pvLossFactor, 10);
-    const inverterW = ceilTo(settings.inverterLoadW * settings.safetyMargin, 50);
+    const inverterW = ceilTo(settings.inverterLoadW * 1.25, 50);
     const controllerA = ceilTo(pvWp / settings.systemVoltage * 1.25, 5);
-    const confidence = getConfidence(dailyWh, settings);
+    const confidence = getConfidence(dailyWh, settings, loadSummary);
     const comparison = getBatteryComparison(adjustedDailyWh, settings);
 
     return {
@@ -428,7 +457,7 @@
     };
   }
 
-  function getConfidence(dailyWh, settings) {
+  function getConfidence(dailyWh, settings, loadSummary) {
     if ((dailyWh > 5000 && settings.systemVoltage === 12) || settings.peakSunHours < 2) {
       return {
         level: "basso",
@@ -436,11 +465,13 @@
         reason: "richiede una verifica tecnica più attenta."
       };
     }
-    if (settings.safetyMargin < 1.2) {
+    if (settings.safetyMargin < 1.2 || (loadSummary.acWh > 0 && settings.inverterEfficiency > 0.95)) {
       return {
         level: "medio",
         className: "is-medium",
-        reason: "il margine di sicurezza è ridotto."
+        reason: settings.safetyMargin < 1.2
+          ? "il margine di sicurezza è ridotto."
+          : "sono presenti carichi AC con efficienza inverter molto ottimistica."
       };
     }
     return {
@@ -520,6 +551,9 @@
     if (largest && row.id === largest.id && row.contributionWh > 0) {
       tr.classList.add("is-largest");
     }
+    if (row.warnings.length > 0) {
+      tr.classList.add("is-warning");
+    }
 
     tr.appendChild(createInputCell("Nome carico", "name", "text", row.name, "load-name"));
     tr.appendChild(createInputCell("Qtà", "quantity", "number", row.quantity, "load-number", "0", "1"));
@@ -562,7 +596,15 @@
     const whCell = document.createElement("td");
     whCell.dataset.label = "Wh/giorno";
     whCell.className = "load-wh";
-    whCell.textContent = formatWh(row.contributionWh);
+    const whValue = document.createElement("strong");
+    whValue.textContent = formatWh(row.contributionWh);
+    whCell.appendChild(whValue);
+    if (row.warnings.length > 0) {
+      const warning = document.createElement("small");
+      warning.className = "load-warning";
+      warning.textContent = `Controlla: ${row.warnings.join(", ")}.`;
+      whCell.appendChild(warning);
+    }
     if (row.type === "AC") {
       whCell.title = "Include correzione per efficienza inverter.";
     }
@@ -624,6 +666,7 @@
     dom.comparisonDifference.textContent = "-";
     dom.reportScenario.textContent = result.error;
     dom.reportLoads.textContent = "";
+    dom.reportParameters.textContent = "";
     dom.reportResults.textContent = "";
     dom.reportComparison.textContent = "";
     latestReportText = "";
@@ -668,6 +711,7 @@
     dom.reportScenario.textContent = `${presetLabel} - ${USE_CASE_LABELS[settings.useCase]} - ${formatNumber(settings.systemVoltage)} V - ${BATTERY_LABELS[settings.batteryType]}`;
 
     dom.reportLoads.innerHTML = buildReportLoadsTable(result);
+    dom.reportParameters.innerHTML = buildReportParametersList(result);
     dom.reportResults.innerHTML = buildReportResultsList(result);
     dom.reportComparison.innerHTML = buildReportComparisonList(result);
     latestReportText = buildReportText(result, generatedAt);
@@ -681,7 +725,7 @@
         <td>${formatNumber(row.watt)} W</td>
         <td>${formatDecimal(row.hours, 1)} h</td>
         <td>${row.type}${row.critical ? " / critico" : ""}</td>
-        <td>${formatWh(row.contributionWh)}</td>
+        <td>${formatWh(row.contributionWh)}${row.warnings.length ? `<br><small>Controlla: ${escapeHtml(row.warnings.join(", "))}</small>` : ""}</td>
       </tr>
     `).join("");
 
@@ -718,6 +762,23 @@
     `;
   }
 
+  function buildReportParametersList(result) {
+    const settings = result.settings;
+    return `
+      <ul>
+        <li>Tensione sistema: ${formatNumber(settings.systemVoltage)} V.</li>
+        <li>Batteria selezionata: ${BATTERY_LABELS[settings.batteryType]}.</li>
+        <li>Autonomia: ${formatDecimal(settings.autonomyDays, 1)} giorni.</li>
+        <li>Ore di sole equivalenti: ${formatDecimal(settings.peakSunHours, 1)} h/giorno.</li>
+        <li>Profondità di scarica: ${formatDecimal(settings.maxDepthOfDischarge * 100, 0)}%.</li>
+        <li>Margine sicurezza: x${formatDecimal(settings.safetyMargin, 2)}.</li>
+        <li>Efficienza inverter: ${formatDecimal(settings.inverterEfficiency * 100, 0)}%.</li>
+        <li>Fattore perdite FV: x${formatDecimal(settings.pvLossFactor, 2)}.</li>
+        <li>Potenza contemporanea max: ${formatNumber(settings.inverterLoadW)} W.</li>
+      </ul>
+    `;
+  }
+
   function buildReportComparisonList(result) {
     return `
       <ul>
@@ -734,7 +795,8 @@
     const presetLabel = getPresetLabel();
     const loadLines = result.loadSummary.rows.map(row => {
       const critical = row.critical ? ", critico" : "";
-      return `- ${row.name}: ${formatDecimal(row.quantity, 1)} x ${formatNumber(row.watt)} W x ${formatDecimal(row.hours, 1)} h, ${row.type}${critical} = ${formatWh(row.contributionWh)}/giorno`;
+      const warnings = row.warnings.length ? ` (controlla: ${row.warnings.join(", ")})` : "";
+      return `- ${row.name}: ${formatDecimal(row.quantity, 1)} x ${formatNumber(row.watt)} W x ${formatDecimal(row.hours, 1)} h, ${row.type}${critical} = ${formatWh(row.contributionWh)}/giorno${warnings}`;
     });
 
     return [
@@ -746,6 +808,17 @@
       "",
       "Lista carichi:",
       ...loadLines,
+      "",
+      "Parametri usati:",
+      `- Tensione sistema: ${formatNumber(settings.systemVoltage)} V`,
+      `- Batteria: ${BATTERY_LABELS[settings.batteryType]}`,
+      `- Autonomia: ${formatDecimal(settings.autonomyDays, 1)} giorni`,
+      `- Ore sole equivalenti: ${formatDecimal(settings.peakSunHours, 1)} h/giorno`,
+      `- DoD: ${formatDecimal(settings.maxDepthOfDischarge * 100, 0)}%`,
+      `- Margine sicurezza: x${formatDecimal(settings.safetyMargin, 2)}`,
+      `- Efficienza inverter: ${formatDecimal(settings.inverterEfficiency * 100, 0)}%`,
+      `- Fattore perdite FV: x${formatDecimal(settings.pvLossFactor, 2)}`,
+      `- Potenza contemporanea max: ${formatNumber(settings.inverterLoadW)} W`,
       "",
       `Totale consumi: ${formatWh(result.dailyWh)}/giorno`,
       `Consumo con margine: ${formatWh(result.adjustedDailyWh)}/giorno`,
@@ -768,7 +841,8 @@
       "- Pannelli Wp = consumo con margine / ore sole x fattore perdite pannelli.",
       "- Corrente MPPT = pannelli Wp / tensione sistema x 1,25.",
       "",
-      "Disclaimer: stima preliminare, non certificazione tecnica o progetto elettrico."
+      "Disclaimer: stima preliminare, non certificazione tecnica o progetto elettrico.",
+      "isolawatt.com"
     ].join("\n");
   }
 
@@ -844,8 +918,9 @@
       systemVoltage: preset.systemVoltage,
       autonomyDays: preset.autonomyDays,
       peakSunHours: preset.peakSunHours,
-      batteryType: "lifepo4",
-      maxDepthOfDischarge: DOD_DEFAULTS.lifepo4,
+      batteryType: preset.batteryType,
+      maxDepthOfDischarge: DOD_DEFAULTS[preset.batteryType],
+      depthOfDischargeManual: false,
       inverterEfficiency: DEFAULTS.inverterEfficiency,
       pvLossFactor: DEFAULTS.pvLossFactor,
       safetyMargin: DEFAULTS.safetyMargin,
@@ -855,6 +930,7 @@
       loads: cloneLoads(preset.loads)
     };
     render();
+    renderFeedback(`Preset "${preset.label}" applicato. Puoi modificare carichi e parametri.`, false);
   }
 
   // local storage
@@ -870,6 +946,8 @@
   }
 
   function getProjectSnapshot() {
+    const timestamp = new Date().toISOString();
+
     return {
       version: 2,
       preset: state.preset,
@@ -880,12 +958,15 @@
       peakSunHours: state.peakSunHours,
       batteryType: state.batteryType,
       maxDepthOfDischarge: state.maxDepthOfDischarge,
+      depthOfDischargeManual: state.depthOfDischargeManual,
       inverterLoadW: state.inverterLoadW,
       safetyMargin: state.safetyMargin,
       inverterEfficiency: state.inverterEfficiency,
       pvLossFactor: state.pvLossFactor,
       dailyWhManual: state.dailyWhManual,
       manualDailyWh: state.manualDailyWh,
+      timestamp,
+      savedAt: timestamp,
       loads: state.loads.map(({ name, quantity, watt, hours, type, critical }) => ({
         name,
         quantity,
@@ -969,6 +1050,7 @@
       s: snapshot.peakSunHours,
       b: snapshot.batteryType,
       d: snapshot.maxDepthOfDischarge,
+      dmz: snapshot.depthOfDischargeManual ? 1 : 0,
       i: snapshot.inverterLoadW,
       sm: snapshot.safetyMargin,
       ie: snapshot.inverterEfficiency,
@@ -1004,6 +1086,7 @@
         peakSunHours: compact.s,
         batteryType: compact.b,
         maxDepthOfDischarge: compact.d,
+        depthOfDischargeManual: compact.dmz === 1,
         inverterLoadW: compact.i,
         safetyMargin: compact.sm,
         inverterEfficiency: compact.ie,
@@ -1073,15 +1156,22 @@
 
     if (!copied) {
       const textarea = document.createElement("textarea");
-      textarea.value = text;
-      textarea.setAttribute("readonly", "");
-      textarea.style.position = "fixed";
-      textarea.style.left = "-9999px";
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      copied = document.execCommand("copy");
-      textarea.remove();
+      try {
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        textarea.setSelectionRange(0, textarea.value.length);
+        copied = document.execCommand("copy");
+      } catch (error) {
+        copied = false;
+      } finally {
+        textarea.remove();
+      }
     }
 
     if (copied) {
@@ -1103,7 +1193,14 @@
           state.manualDailyWh = positiveNumber(field.value, 0);
         } else if (key === "batteryType") {
           state.batteryType = field.value;
-          state.maxDepthOfDischarge = DOD_DEFAULTS[state.batteryType];
+          if (!state.depthOfDischargeManual) {
+            state.maxDepthOfDischarge = DOD_DEFAULTS[state.batteryType];
+          }
+        } else if (key === "maxDepthOfDischarge") {
+          state.maxDepthOfDischarge = field.value;
+          if (state.mode === "advanced") {
+            state.depthOfDischargeManual = true;
+          }
         } else {
           state[key] = field.value;
         }
@@ -1114,7 +1211,14 @@
       field.addEventListener("change", () => {
         if (key === "batteryType") {
           state.batteryType = field.value;
-          state.maxDepthOfDischarge = DOD_DEFAULTS[state.batteryType];
+          if (!state.depthOfDischargeManual) {
+            state.maxDepthOfDischarge = DOD_DEFAULTS[state.batteryType];
+          }
+        } else if (key === "maxDepthOfDischarge") {
+          state.maxDepthOfDischarge = field.value;
+          if (state.mode === "advanced") {
+            state.depthOfDischargeManual = true;
+          }
         } else if (key !== "dailyWh") {
           state[key] = field.value;
         }

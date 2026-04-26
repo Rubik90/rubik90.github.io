@@ -477,6 +477,10 @@ h3 {
   background: var(--warning-bg);
 }
 
+.loads-table tr.is-warning td {
+  box-shadow: inset 0 -1px 0 rgba(217, 107, 76, 0.18);
+}
+
 .loads-table input,
 .loads-table select,
 .field input,
@@ -526,6 +530,17 @@ h3 {
 .load-wh {
   min-width: 96px;
   color: var(--deep-teal);
+  font-weight: 800;
+}
+
+.load-wh strong {
+  display: block;
+}
+
+.load-warning {
+  display: block;
+  margin-top: 4px;
+  color: #9d422c;
   font-weight: 800;
 }
 
@@ -738,6 +753,7 @@ h3 {
 }
 
 .feature-grid,
+.seo-guide,
 .case-grid,
 .faq-list {
   display: grid;
@@ -747,9 +763,21 @@ h3 {
 }
 
 .feature-grid article,
+.seo-guide article,
 .case-grid article,
 .faq-list article {
   padding: 20px;
+}
+
+.seo-guide article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+.seo-guide p {
+  margin: 10px 0 0;
+  color: var(--muted);
 }
 
 .case-grid article:nth-child(2n) {
@@ -820,6 +848,14 @@ h3 {
 .print-report section {
   margin-top: 18px;
   break-inside: avoid;
+}
+
+.report-footer {
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  color: var(--muted);
+  font-weight: 800;
 }
 
 .report-table {
@@ -902,6 +938,10 @@ body[data-mode="simple"] .advanced-only {
 
   .feature-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .seo-guide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .case-grid,
@@ -989,6 +1029,10 @@ body[data-mode="simple"] .advanced-only {
     background: var(--warning-bg);
   }
 
+  .loads-table tr.is-warning {
+    border-color: rgba(217, 107, 76, 0.5);
+  }
+
   .loads-table tr.is-largest td {
     background: transparent;
   }
@@ -1027,6 +1071,7 @@ body[data-mode="simple"] .advanced-only {
   .section-heading,
   .calculator-layout,
   .feature-grid,
+  .seo-guide,
   .case-grid,
   .checklist,
   .monetization,
@@ -1043,6 +1088,7 @@ body[data-mode="simple"] .advanced-only {
   .calculator-form,
   .results-panel,
   .feature-grid article,
+  .seo-guide article,
   .case-grid article,
   .faq-list article,
   .monetization,
@@ -1108,8 +1154,9 @@ body[data-mode="simple"] .advanced-only {
     color: #000;
   }
 
-  .report-header,
+.report-header,
   .print-report section,
+  .report-footer,
   .report-table,
   .report-table tr,
   .report-table td,
@@ -1120,6 +1167,10 @@ body[data-mode="simple"] .advanced-only {
   .report-table th,
   .report-table td {
     border-color: #bbb;
+    color: #000;
+  }
+
+  .report-footer {
     color: #000;
   }
 
