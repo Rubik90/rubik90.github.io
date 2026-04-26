@@ -66,7 +66,11 @@
       <img class="brand-mark" src="../assets/isolawatt-logo.svg" alt="" width="38" height="38">
       <span>IsolaWatt</span>
     </a>
-    <nav class="site-nav" aria-label="Navigazione principale">
+    <button class="nav-toggle" type="button" aria-controls="primaryNav" aria-expanded="false" data-nav-toggle>
+      <span class="sr-only">Apri menu</span>
+      <span aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="primaryNav" aria-label="Navigazione principale">
       <a href="../#calcolatore">Calcolatore</a>
       <a href="../camper/">Camper</a>
       <a href="../barca/">Barca</a>
@@ -75,6 +79,13 @@
       <a href="../privacy/">Privacy</a>
     </nav>
   </header>
+
+  <nav class="breadcrumbs" aria-label="Percorso">
+    <ol>
+      <li><a href="../">Home</a></li>
+      <li aria-current="page">Calcolo batteria fotovoltaico</li>
+    </ol>
+  </nav>
 
   <main>
     <section class="hero" aria-labelledby="hero-title">

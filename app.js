@@ -1,6 +1,13 @@
 (function () {
   "use strict";
 
+  document.documentElement.classList.add("has-js");
+  initNavigation();
+
+  if (!document.getElementById("solar-form")) {
+    return;
+  }
+
   // constants
   const STORAGE_KEY = "isolawatt.project.v2";
   const SHARE_PREFIX = "iw=";
@@ -33,6 +40,39 @@
     baita: "Baita",
     "casa-isolata": "Casa isolata"
   };
+
+  function initNavigation() {
+    const header = document.querySelector(".site-header");
+    const toggle = document.querySelector("[data-nav-toggle]");
+    const nav = document.getElementById("primaryNav");
+
+    if (!header || !toggle || !nav) {
+      return;
+    }
+
+    function closeNav() {
+      header.classList.remove("is-nav-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
+    toggle.addEventListener("click", () => {
+      const shouldOpen = toggle.getAttribute("aria-expanded") !== "true";
+      header.classList.toggle("is-nav-open", shouldOpen);
+      toggle.setAttribute("aria-expanded", String(shouldOpen));
+    });
+
+    nav.addEventListener("click", event => {
+      if (event.target.closest("a")) {
+        closeNav();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeNav();
+      }
+    });
+  }
 
   const PRESETS = {
     "camper-weekend": {
@@ -697,6 +737,7 @@
     dom.comparisonNote.textContent = "A parità di consumi, AGM richiede più capacità nominale perché usa una profondità di scarica inferiore.";
     dom.batteryExplanation.textContent = `Uso ${formatWh(result.adjustedDailyWh)} al giorno per ${formatDecimal(settings.autonomyDays, 1)} giorni e DoD ${formatDecimal(settings.maxDepthOfDischarge * 100, 0)}%.`;
     dom.pvExplanation.textContent = `Divido il consumo con margine per ${formatDecimal(settings.peakSunHours, 1)} ore di sole e applico fattore perdite x${formatDecimal(settings.pvLossFactor, 2)}.`;
+    pulseResults();
   }
 
   function renderReport(result) {
@@ -849,6 +890,50 @@
   function renderFeedback(message, isError) {
     dom.formFeedback.textContent = message;
     dom.formFeedback.classList.toggle("is-error", isError);
+  }
+
+  function pulseResults() {
+    const panel = document.querySelector(".results-panel");
+    if (!panel) {
+      return;
+    }
+    panel.classList.remove("is-updating");
+    void panel.offsetWidth;
+    panel.classList.add("is-updating");
+  }
+
+  function showPresetArrival(presetKey) {
+    const preset = PRESETS[presetKey];
+    const calc = document.getElementById("calcolatore");
+    const toast = document.getElementById("presetToast");
+
+    if (!preset) {
+      return;
+    }
+
+    renderFeedback(`Preset "${preset.label}" precaricato. Puoi modificare carichi e parametri.`, false);
+
+    if (calc) {
+      calc.classList.remove("is-arrival-highlight");
+      void calc.offsetWidth;
+      calc.classList.add("is-arrival-highlight");
+    }
+
+    if (!toast) {
+      return;
+    }
+
+    toast.textContent = `Abbiamo precaricato i dati per "${preset.label}". Ora puoi adattarli al tuo caso reale.`;
+    toast.hidden = false;
+    requestAnimationFrame(() => toast.classList.add("is-visible"));
+
+    window.clearTimeout(showPresetArrival.timer);
+    showPresetArrival.timer = window.setTimeout(() => {
+      toast.classList.remove("is-visible");
+      window.setTimeout(() => {
+        toast.hidden = true;
+      }, 220);
+    }, 4200);
   }
 
   function escapeHtml(value) {
@@ -1273,18 +1358,21 @@
   // init
   function init() {
     const hash = window.location.hash.replace(/^#/, "");
+    const presetKey = new URLSearchParams(hash).get("preset");
 
-    if (hash.startsWith("preset=")) {
-      const presetKey = hash.split("=")[1];
-      if (PRESETS[presetKey]) {
-        applyPreset(presetKey);
-        const calc = document.getElementById("calcolatore");
-        if (calc) {
-          setTimeout(() => calc.scrollIntoView({ behavior: "smooth" }), 100);
-        }
-      } else {
-        render();
+    if (presetKey && PRESETS[presetKey]) {
+      applyPreset(presetKey);
+      const calc = document.getElementById("calcolatore");
+      if (calc) {
+        calc.setAttribute("tabindex", "-1");
+        setTimeout(() => {
+          calc.scrollIntoView({ behavior: "smooth", block: "start" });
+          calc.focus({ preventScroll: true });
+          showPresetArrival(presetKey);
+        }, 100);
       }
+    } else if (presetKey) {
+      render();
     } else {
       const sharedProject = parseShareHash();
       if (sharedProject) {

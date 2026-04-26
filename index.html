@@ -69,7 +69,11 @@
       <img class="brand-mark" src="assets/isolawatt-logo.svg" alt="" width="38" height="38">
       <span>IsolaWatt</span>
     </a>
-    <nav class="site-nav" aria-label="Navigazione principale">
+    <button class="nav-toggle" type="button" aria-controls="primaryNav" aria-expanded="false" data-nav-toggle>
+      <span class="sr-only">Apri menu</span>
+      <span aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="primaryNav" aria-label="Navigazione principale">
       <a href="#calcolatore">Calcolatore</a>
       <a href="camper/">Camper</a>
       <a href="barca/">Barca</a>
@@ -143,7 +147,7 @@
             </div>
           </section>
 
-          <section class="preset-panel" id="preset-panel" aria-labelledby="preset-title">
+          <section class="preset-panel step-panel" id="preset-panel" data-step="1" aria-labelledby="preset-title">
             <div class="section-mini-heading">
               <p class="eyebrow">Preset rapidi</p>
               <h3 id="preset-title">Parti da uno scenario reale</h3>
@@ -159,7 +163,7 @@
             <p class="helper-text">I preset sono solo un punto di partenza: ogni campo resta modificabile.</p>
           </section>
 
-          <section class="loads-panel" aria-labelledby="loads-title">
+          <section class="loads-panel step-panel" data-step="2" aria-labelledby="loads-title">
             <div class="section-mini-heading split-heading">
               <div>
                 <p class="eyebrow">I tuoi consumi</p>
@@ -206,7 +210,7 @@
             </div>
           </section>
 
-          <section class="settings-panel" aria-labelledby="settings-title">
+          <section class="settings-panel step-panel" data-step="3" aria-labelledby="settings-title">
             <div class="section-mini-heading">
               <p class="eyebrow">Parametri</p>
               <h3 id="settings-title">Impostazioni del sistema</h3>
@@ -222,14 +226,20 @@
                 </select>
               </label>
 
-              <label class="field" for="systemVoltage">
-                <span>Tensione sistema</span>
+              <div class="field">
+                <span class="field-label-row">
+                  <label for="systemVoltage">Tensione sistema</label>
+                  <details class="field-tip">
+                    <summary aria-label="Spiega tensione sistema">i</summary>
+                    <span>12 V va bene per piccoli impianti. 24 V o 48 V aiutano quando potenze e correnti crescono.</span>
+                  </details>
+                </span>
                 <select id="systemVoltage" name="systemVoltage">
                   <option value="12">12 V</option>
                   <option value="24">24 V</option>
                   <option value="48">48 V</option>
                 </select>
-              </label>
+              </div>
 
               <label class="field advanced-only" for="dailyWh">
                 <span>Consumo giornaliero</span>
@@ -237,23 +247,41 @@
                 <small id="dailyWh-help">Aggiornato dai carichi; modificabile per modalità rapida.</small>
               </label>
 
-              <label class="field" for="autonomyDays">
-                <span>Giorni di autonomia</span>
+              <div class="field">
+                <span class="field-label-row">
+                  <label for="autonomyDays">Giorni di autonomia</label>
+                  <details class="field-tip">
+                    <summary aria-label="Spiega giorni di autonomia">i</summary>
+                    <span>Indica quanti giorni vuoi coprire con poco sole. Aumentarlo fa crescere soprattutto la batteria.</span>
+                  </details>
+                </span>
                 <input id="autonomyDays" name="autonomyDays" type="number" min="0.5" step="0.5" value="2" inputmode="decimal">
-              </label>
+              </div>
 
-              <label class="field" for="peakSunHours">
-                <span>Ore di sole equivalenti</span>
+              <div class="field">
+                <span class="field-label-row">
+                  <label for="peakSunHours">Ore di sole equivalenti</label>
+                  <details class="field-tip">
+                    <summary aria-label="Spiega ore di sole equivalenti">i</summary>
+                    <span>Usa un valore prudente: 3-4 ore per stime generiche, meno in inverno o con ombre frequenti.</span>
+                  </details>
+                </span>
                 <input id="peakSunHours" name="peakSunHours" type="number" min="0.5" step="0.5" value="4" inputmode="decimal">
-              </label>
+              </div>
 
-              <label class="field" for="batteryType">
-                <span>Tipo batteria</span>
+              <div class="field">
+                <span class="field-label-row">
+                  <label for="batteryType">Tipo batteria</label>
+                  <details class="field-tip">
+                    <summary aria-label="Spiega tipo batteria">i</summary>
+                    <span>LiFePO4 usa più capacità utile. AGM richiede più capacità nominale per la stessa autonomia.</span>
+                  </details>
+                </span>
                 <select id="batteryType" name="batteryType">
                   <option value="lifepo4">LiFePO4</option>
                   <option value="agm">AGM</option>
                 </select>
-              </label>
+              </div>
 
               <label class="field advanced-only" for="maxDepthOfDischarge">
                 <span>Profondità di scarica max</span>
@@ -288,7 +316,7 @@
             </div>
           </section>
 
-          <section class="project-panel" aria-labelledby="project-title">
+          <section class="project-panel step-panel" data-step="4" aria-labelledby="project-title">
             <div>
               <p class="eyebrow">Progetto locale</p>
               <h3 id="project-title">Salva o condividi</h3>
@@ -605,6 +633,8 @@
       </div>
     </section>
   </main>
+
+  <div class="preset-toast" id="presetToast" role="status" aria-live="polite" hidden></div>
 
   <footer class="site-footer">
     <span>IsolaWatt Solar Sizer</span>
