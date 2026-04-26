@@ -1272,12 +1272,27 @@
 
   // init
   function init() {
-    const sharedProject = parseShareHash();
-    if (sharedProject) {
-      applySnapshot(sharedProject);
-      renderFeedback("Scenario caricato dal link condivisibile.", false);
+    const hash = window.location.hash.replace(/^#/, "");
+
+    if (hash.startsWith("preset=")) {
+      const presetKey = hash.split("=")[1];
+      if (PRESETS[presetKey]) {
+        applyPreset(presetKey);
+        const calc = document.getElementById("calcolatore");
+        if (calc) {
+          setTimeout(() => calc.scrollIntoView({ behavior: "smooth" }), 100);
+        }
+      } else {
+        render();
+      }
     } else {
-      render();
+      const sharedProject = parseShareHash();
+      if (sharedProject) {
+        applySnapshot(sharedProject);
+        renderFeedback("Scenario caricato dal link condivisibile.", false);
+      } else {
+        render();
+      }
     }
 
     if (!storageAvailable()) {

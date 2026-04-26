@@ -18,14 +18,17 @@ https://isolawatt.com/privacy/
 ## Files
 
 - `index.html`: Italian landing page and calculator shell.
-- `app.js`: browser-only solar sizing calculator, presets, local save, and share links.
+- `app.js`: browser-only solar sizing calculator, presets, local save, and share links (now supports `#preset=...` URL hashes).
 - `styles.css`: shared responsive and print styling.
 - `privacy/index.html`: public Privacy Policy for Google Play.
+- `camper/`, `barca/`, `baita/`, `casa-isolata/`, `calcolo-batteria-fotovoltaico/`: Static SEO guide pages with URL hash preset links for the calculator.
 - `assets/isolawatt-logo.svg`: reusable app/site logo.
 - `assets/isolawatt-logo-512.png`: PNG logo.
 - `assets/isolawatt-logo-512.jpg`: JPEG logo with white background.
 - `CNAME`: GitHub Pages custom domain, currently `isolawatt.com`.
 - `robots.txt` and `sitemap.xml`: crawler metadata.
+
+The site remains 100% static, privacy-friendly, without any backend, external tracking, or cookies.
 
 ## Local Testing
 

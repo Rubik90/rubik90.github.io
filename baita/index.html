@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fotovoltaico per baita — calcolo batteria, pannelli e autonomia | IsolaWatt</title>
+  <meta name="description" content="Calcola una stima per alimentare una baita con pannelli solari, batteria, inverter e regolatore MPPT. Esempi per weekend e uso essenziale.">
+  <meta property="og:image" content="https://isolawatt.com/assets/isolawatt-logo-512.png">
+  <link rel="canonical" href="https://isolawatt.com/baita/">
+  <link rel="icon" href="../assets/isolawatt-logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/isolawatt-logo-512.png">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../app.js" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quanta batteria serve per una baita?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dipende dai giorni di utilizzo. Per i weekend (ven-dom) serve una batteria in grado di coprire l'energia che consumerai, calcolando che dal lunedì al giovedì i pannelli avranno tempo per ricaricarla completamente."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posso alimentare un frigo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì, ma un frigorifero è energivoro, specie in estate o se si tratta di un vecchio frigo AC. Pianifica bene pannelli (spesso > 400W) e batteria se vuoi lasciarlo sempre acceso."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanti giorni di autonomia devo prevedere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per uso weekend, spesso bastano 2 o 3 giorni di autonomia. Per chi vive la baita continuativamente, meglio avere più margine e/o un generatore di backup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quando conviene 24 V o 48 V?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Se usi un inverter superiore a 1200-1500W per alimentare fornetti o piccoli elettrodomestici, un sistema a 24V o 48V mantiene le correnti più basse sui cavi e rende l'impianto più sicuro e gestibile."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Il calcolo basta per installare l’impianto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Il calcolatore dà una stima teorica. L'installazione richiede conoscenze specifiche (sezioni cavi, fusibili di protezione, messa a terra). Contatta un professionista."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="IsolaWatt home">
+      <img class="brand-mark" src="../assets/isolawatt-logo.svg" alt="" width="38" height="38">
+      <span>IsolaWatt</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigazione principale">
+      <a href="../#calcolatore">Calcolatore</a>
+      <a href="../camper/">Camper</a>
+      <a href="../barca/">Barca</a>
+      <a href="../baita/">Baita</a>
+      <a href="../casa-isolata/">Casa isolata</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Guida pratica IsolaWatt</p>
+        <h1 id="hero-title">Fotovoltaico per baita: dimensionare batteria e pannelli</h1>
+        <p class="lead">
+          Pianifica il tuo impianto off-grid per le fughe in montagna: scopri come stimare consumi, autonomia per il weekend, inverter e kit solare.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="../#preset=baita-weekend">Apri il calcolatore baita</a>
+        </div>
+        <p class="trust-note">Stima preliminare, non certificazione tecnica. Nessun dato viene inviato a IsolaWatt.</p>
+      </div>
+    </section>
+
+    <section class="content-band">
+      <div class="seo-guide">
+        <article>
+          <h2>Cosa cambia rispetto a camper e barca</h2>
+          <p>La baita gode del vantaggio di potersi espandere maggiormente. Generalmente c'è più spazio per i pannelli (es. sul tetto o a terra) e i vincoli di peso per le batterie sono minori rispetto a un mezzo mobile. Tuttavia, l'assenza totale di connessione elettrica rende la baita un vero impianto ad isola (off-grid).</p>
+        </article>
+
+        <article>
+          <h2>Uso weekend vs uso continuativo</h2>
+          <p>Se utilizzi la baita solo nei weekend, il tuo impianto solare avrà 5 giorni (lun-ven) per ricaricare la batteria. Puoi quindi permetterti di sottodimensionare leggermente il campo solare, avendo però un grosso banco batteria per coprire i consumi di sabato e domenica. Se invece la abiti per lunghe settimane, l'apporto solare deve eguagliare o superare il consumo giornaliero in tempo reale.</p>
+        </article>
+
+        <article>
+          <h2>Luci, router, frigo e piccoli elettrodomestici</h2>
+          <p>I carichi classici di una baita comprendono: illuminazione, router internet e ricarica elettronica. Se decidi di avere un frigorifero acceso tutta la settimana, ricorda che consumerà la batteria anche quando tu non ci sei. L'uso di piccoli elettrodomestici a 230V richiede inoltre un inverter dimensionato sul carico più "pesante" che accenderai.</p>
+        </article>
+
+        <article>
+          <h2>Autonomia senza sole</h2>
+          <p>In montagna le condizioni meteo variano e i tetti possono coprirsi di neve in inverno. L'autonomia della batteria deve coprire il fabbisogno per almeno i giorni completi previsti del tuo soggiorno (o i giorni in cui il sole scarseggia), tenendo sempre a mente i margini di sicurezza legati alla chimica della batteria (DoD).</p>
+        </article>
+
+        <article>
+          <h2>Batteria: capacità nominale e capacità utile</h2>
+          <p>Le classiche batterie AGM sono pesanti ma ottime se fisse. Tuttavia vanno scaricate tipicamente fino al 50%. Le moderne batterie LiFePO4 costano di più ma tollerano scariche dell'80% o superiori, rendendo necessaria una capacità nominale complessiva nettamente inferiore.</p>
+        </article>
+
+        <article>
+          <h2>Pannelli e ore di sole</h2>
+          <p>Indirizza i pannelli possibilmente a Sud per massimizzare le ore di esposizione solare equivalenti in baita. Calcola i consumi giornalieri attesi (tenendo conto anche dell'efficienza dell'inverter per i carichi AC) e dividi per le ore medie di insolazione: otterrai la potenza (Wp) dei pannelli richiesti.</p>
+        </article>
+
+        <article>
+          <h2>Quando valutare 24 V o 48 V</h2>
+          <p>Considerando la distanza dei pannelli e le potenze in gioco (magari sopra i 1000W-2000W), in una baita è consigliato optare per impianti a 24V o addirittura 48V. Questo riduce la dimensione dei cavi, la dissipazione termica, e aumenta l'efficienza generale di ricarica dei regolatori MPPT.</p>
+        </article>
+      </div>
+
+      <div class="actions" style="margin-top: 40px; text-align: center; justify-content: center;">
+        <a class="button primary" href="../#preset=baita-weekend" style="font-size: 1.1rem; padding: 14px 24px;">Apri il calcolatore con preset baita</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">Domande Frequenti</p>
+        <h2 id="faq-title">FAQ Solare Baita</h2>
+      </div>
+      <div class="faq-list">
+        <article>
+          <h3>Quanta batteria serve per una baita?</h3>
+          <p>Dipende dai giorni di utilizzo. Per i weekend (ven-dom) serve una batteria in grado di coprire l'energia che consumerai, calcolando che dal lunedì al giovedì i pannelli avranno tempo per ricaricarla completamente.</p>
+        </article>
+        <article>
+          <h3>Posso alimentare un frigo?</h3>
+          <p>Sì, ma un frigorifero è energivoro, specie in estate o se si tratta di un vecchio frigo AC. Pianifica bene pannelli (spesso > 400W) e batteria se vuoi lasciarlo sempre acceso.</p>
+        </article>
+        <article>
+          <h3>Quanti giorni di autonomia devo prevedere?</h3>
+          <p>Per uso weekend, spesso bastano 2 o 3 giorni di autonomia. Per chi vive la baita continuativamente, meglio avere più margine e/o un generatore di backup.</p>
+        </article>
+        <article>
+          <h3>Quando conviene 24 V o 48 V?</h3>
+          <p>Se usi un inverter superiore a 1200-1500W per alimentare fornetti o piccoli elettrodomestici, un sistema a 24V o 48V mantiene le correnti più basse sui cavi e rende l'impianto più sicuro e gestibile.</p>
+        </article>
+        <article>
+          <h3>Il calcolo basta per installare l’impianto?</h3>
+          <p>No. Il calcolatore dà una stima teorica. L'installazione richiede conoscenze specifiche (sezioni cavi, fusibili di protezione, messa a terra). Contatta un professionista.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="use-cases">
+      <div class="section-heading">
+        <h2 id="internal-links-title">Esplora altre guide</h2>
+      </div>
+      <div class="case-grid">
+        <article>
+          <h3><a href="../casa-isolata/">Fotovoltaico per casa isolata</a></h3>
+          <p>Per le abitazioni a utilizzo prolungato, l'approccio è simile ma su una scala più strutturata.</p>
+        </article>
+        <article>
+          <h3><a href="../calcolo-batteria-fotovoltaico/">Calcolo batteria fotovoltaico</a></h3>
+          <p>Capire la differenza tecnica tra batterie AGM, Gel e Litio (LiFePO4) e definire la capacità necessaria in Ah.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>IsolaWatt Solar Sizer</span>
+    <a href="../privacy/">Privacy</a>
+    <a href="mailto:support@isolawatt.com">support@isolawatt.com</a>
+  </footer>
+</body>
+</html>

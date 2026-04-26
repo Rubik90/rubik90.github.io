@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kit solare barca — calcolo pannelli, batterie e consumi | IsolaWatt</title>
+  <meta name="description" content="Stima un kit solare per barca in rada: consumi giornalieri, batteria, pannelli, regolatore MPPT e inverter.">
+  <meta property="og:image" content="https://isolawatt.com/assets/isolawatt-logo-512.png">
+  <link rel="canonical" href="https://isolawatt.com/barca/">
+  <link rel="icon" href="../assets/isolawatt-logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/isolawatt-logo-512.png">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../app.js" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quanti pannelli servono per stare in rada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dipende dai consumi. Per coprire il frigo, le luci e la strumentazione base, spesso servono dai 200W ai 400W di pannelli, a seconda delle ombreggiature (es. albero, boma) e dell'orientamento."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Il frigo è il carico principale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì, in quasi tutte le barche a vela e a motore il frigo a pozzetto è il carico che consuma più energia in 24 ore, assorbendo dai 30 ai 60 Ah a 12V al giorno."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Meglio 12 V o 24 V in barca?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La maggior parte delle barche di piccole o medie dimensioni ha un impianto a 12V. Si passa a 24V su imbarcazioni più grandi o catamarani con grossi carichi (es. winch elettrici pesanti, dissalatori importanti) per ridurre la sezione dei cavi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Serve sempre un inverter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non è obbligatorio. Se tutti i tuoi carichi sono a 12V (o se usi alimentatori DC-DC per i laptop), puoi farne a meno. È utile se vuoi usare elettrodomestici a 230V in rada."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Il calcolatore vale per impianti nautici certificati?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Offre una stima preliminare e teorica per aiutarti a capire gli ordini di grandezza. L'installazione nautica richiede standard e protezioni severe contro l'ambiente marino e va affidata a professionisti."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="IsolaWatt home">
+      <img class="brand-mark" src="../assets/isolawatt-logo.svg" alt="" width="38" height="38">
+      <span>IsolaWatt</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigazione principale">
+      <a href="../#calcolatore">Calcolatore</a>
+      <a href="../camper/">Camper</a>
+      <a href="../barca/">Barca</a>
+      <a href="../baita/">Baita</a>
+      <a href="../casa-isolata/">Casa isolata</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Guida pratica IsolaWatt</p>
+        <h1 id="hero-title">Kit solare per barca: come stimare pannelli e batteria</h1>
+        <p class="lead">
+          Pianifica l'indipendenza energetica per le tue soste in rada: stima i consumi, il banco batterie e i pannelli necessari per la tua barca.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="../#preset=barca-rada">Apri il calcolatore barca</a>
+        </div>
+        <p class="trust-note">Stima preliminare, non certificazione tecnica. Nessun dato viene inviato a IsolaWatt.</p>
+      </div>
+    </section>
+
+    <section class="content-band">
+      <div class="seo-guide">
+        <article>
+          <h2>Perché la barca è diversa dal camper</h2>
+          <p>Mentre i camperisti possono spesso contare sull'alternatore in viaggio o sulle colonnine nei campeggi, chi fa sosta libera (rada) in barca è completamente dipendente dalle proprie riserve. Inoltre, l'ambiente marino è ostile e lo spazio (senza ombre di vele e sartiame) è limitato, rendendo cruciale un buon calcolo dell'energia.</p>
+        </article>
+
+        <article>
+          <h2>Consumi tipici in rada</h2>
+          <p>Quando il motore è spento e sei in rada, i consumi essenziali non si fermano. Anzi, si sommano: luci, strumenti, pompe, e naturalmente il frigorifero. Mappare questi consumi in modo preciso (Watt e ore d'uso previste per ciascuno) è l'unico modo per non trovarsi "al buio" o dover accendere il motore ricaricando rumorosamente.</p>
+        </article>
+
+        <article>
+          <h2>Luci, strumenti, frigo e pompe</h2>
+          <p>Il frigorifero a pozzetto è spesso il carico dominante, funzionando a cicli 24h su 24h. Le luci interne a LED e le luci di fonda consumano relativamente poco. Strumentazione (come un plotter se lasciato acceso) e l'autopilota (quando si naviga a vela) assorbono una quantità di corrente significativa. La pompa di sentina e l'autoclave hanno spunti alti ma per brevi lassi di tempo.</p>
+        </article>
+
+        <article>
+          <h2>Batteria e autonomia</h2>
+          <p>Il banco batterie (spesso indicato come banco "servizi") immagazzina l'energia per la notte e le giornate coperte. Idealmente, in rada, è consigliato puntare ad avere almeno 2 giorni di autonomia (senza apporto solare), in base alla profondità di scarica tollerabile (più ampia per le LiFePO4, più stretta per le AGM/Piombo).</p>
+        </article>
+
+        <article>
+          <h2>Pannelli: spazio, ombre e orientamento</h2>
+          <p>Le zone per i pannelli (es. bimini, rollbar, tuga, falchetta) presentano sfide. L'ombra di boma o albero può far crollare drasticamente la resa di un pannello intero se non si adotta un approccio corretto (es. pannelli flessibili con bypass diodi efficaci e regolatori dedicati). Usa il nostro calcolatore per stimare la potenza "pulita" necessaria (Wp).</p>
+        </article>
+
+        <article>
+          <h2>MPPT e tensione sistema</h2>
+          <p>La maggioranza delle barche da crociera ha sistemi a 12V. È caldamente raccomandato un regolatore MPPT per ottimizzare la ricarica dai pannelli. Avere più regolatori MPPT per pannelli dislocati in aree diversamente esposte può migliorare molto l'efficienza complessiva.</p>
+        </article>
+
+        <article>
+          <h2>Errori comuni in barca</h2>
+          <p>Gli errori classici: sovrastimare le ore di sole pieno in mare (ci sono nuvole e ombre), sottodimensionare il banco batterie, o dimenticare l'autoconsumo dell'inverter lasciato acceso a vuoto. Usare un tool di stima realistico riduce le brutte sorprese.</p>
+        </article>
+      </div>
+
+      <div class="actions" style="margin-top: 40px; text-align: center; justify-content: center;">
+        <a class="button primary" href="../#preset=barca-rada" style="font-size: 1.1rem; padding: 14px 24px;">Apri il calcolatore con preset barca</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">Domande Frequenti</p>
+        <h2 id="faq-title">FAQ Solare Barca</h2>
+      </div>
+      <div class="faq-list">
+        <article>
+          <h3>Quanti pannelli servono per stare in rada?</h3>
+          <p>Dipende dai consumi. Per coprire il frigo, le luci e la strumentazione base, spesso servono dai 200W ai 400W di pannelli, a seconda delle ombreggiature (es. albero, boma) e dell'orientamento.</p>
+        </article>
+        <article>
+          <h3>Il frigo è il carico principale?</h3>
+          <p>Sì, in quasi tutte le barche a vela e a motore il frigo a pozzetto è il carico che consuma più energia in 24 ore, assorbendo dai 30 ai 60 Ah a 12V al giorno.</p>
+        </article>
+        <article>
+          <h3>Meglio 12 V o 24 V in barca?</h3>
+          <p>La maggior parte delle barche di piccole o medie dimensioni ha un impianto a 12V. Si passa a 24V su imbarcazioni più grandi o catamarani con grossi carichi (es. winch elettrici pesanti, dissalatori importanti) per ridurre la sezione dei cavi.</p>
+        </article>
+        <article>
+          <h3>Serve sempre un inverter?</h3>
+          <p>Non è obbligatorio. Se tutti i tuoi carichi sono a 12V (o se usi alimentatori DC-DC per i laptop), puoi farne a meno. È utile se vuoi usare elettrodomestici a 230V in rada.</p>
+        </article>
+        <article>
+          <h3>Il calcolatore vale per impianti nautici certificati?</h3>
+          <p>No. Offre una stima preliminare e teorica per aiutarti a capire gli ordini di grandezza. L'installazione nautica richiede standard e protezioni severe contro l'ambiente marino e va affidata a professionisti.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="use-cases">
+      <div class="section-heading">
+        <h2 id="internal-links-title">Esplora altre guide</h2>
+      </div>
+      <div class="case-grid">
+        <article>
+          <h3><a href="../calcolo-batteria-fotovoltaico/">Calcolo batteria fotovoltaico</a></h3>
+          <p>Scopri perché calcolare correttamente la capacità della tua batteria è vitale per le lunghe soste.</p>
+        </article>
+        <article>
+          <h3><a href="../camper/">Calcolo solare camper</a></h3>
+          <p>Scopri l'approccio al calcolo solare per i veicoli ricreazionali, simile ma non identico a quello nautico.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>IsolaWatt Solar Sizer</span>
+    <a href="../privacy/">Privacy</a>
+    <a href="mailto:support@isolawatt.com">support@isolawatt.com</a>
+  </footer>
+</body>
+</html>

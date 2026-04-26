@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calcolo batteria fotovoltaico — Wh, Ah, autonomia e DoD | IsolaWatt</title>
+  <meta name="description" content="Guida pratica per calcolare una batteria fotovoltaica: Wh, Ah, tensione, autonomia, profondità di scarica e differenza tra LiFePO4 e AGM.">
+  <meta property="og:image" content="https://isolawatt.com/assets/isolawatt-logo-512.png">
+  <link rel="canonical" href="https://isolawatt.com/calcolo-batteria-fotovoltaico/">
+  <link rel="icon" href="../assets/isolawatt-logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/isolawatt-logo-512.png">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../app.js" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Come si calcola una batteria in Ah?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per ottenere gli Ampere-ora (Ah), devi dividere i Watt-ora (Wh) totali necessari per la tensione del tuo sistema (12V, 24V o 48V)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Cosa significa Wh?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Wh (Watt-ora) è l'unità di misura dell'energia. Rappresenta una potenza di 1 Watt erogata per 1 ora. È la grandezza più utile per stimare i consumi e dimensionare i componenti."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Perché LiFePO4 richiede meno capacità nominale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Perché le batterie al litio LiFePO4 permettono una profondità di scarica (DoD) dell'80-90% senza rovinarsi, a differenza delle AGM che andrebbero scaricate al massimo fino al 50%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanti giorni di autonomia scegliere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dipende dall'applicazione. Per camper o barca in estate bastano 1,5-2 giorni. Per una baita o una casa isolata, dove il servizio non può mai mancare, si calcolano 3 o più giorni."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Il calcolo vale per qualsiasi impianto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "I principi fisici (Wh, Ah, tensione) sono universali, ma il calcolo teorico va poi adattato alle specifiche dei prodotti scelti e verificato da un tecnico per la sicurezza."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="IsolaWatt home">
+      <img class="brand-mark" src="../assets/isolawatt-logo.svg" alt="" width="38" height="38">
+      <span>IsolaWatt</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigazione principale">
+      <a href="../#calcolatore">Calcolatore</a>
+      <a href="../camper/">Camper</a>
+      <a href="../barca/">Barca</a>
+      <a href="../baita/">Baita</a>
+      <a href="../casa-isolata/">Casa isolata</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Guida pratica IsolaWatt</p>
+        <h1 id="hero-title">Calcolo batteria fotovoltaico: Wh, Ah, autonomia e profondità di scarica</h1>
+        <p class="lead">
+          Guida pratica e concetti fondamentali per dimensionare senza errori il banco di accumulo per qualsiasi impianto solare ad isola.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="../#calcolatore">Apri il calcolatore batteria</a>
+        </div>
+        <p class="trust-note">Stima preliminare, non certificazione tecnica. Nessun dato viene inviato a IsolaWatt.</p>
+      </div>
+    </section>
+
+    <section class="content-band">
+      <div class="seo-guide">
+        <article>
+          <h2>Differenza tra Wh e Ah</h2>
+          <p>La confusione più comune è tra Ampere-ora (Ah) e Watt-ora (Wh). Gli <strong>Ah</strong> indicano la "capienza" elettrica in termini di cariche trasportabili, ma non ci dicono nulla sull'energia reale se non conosciamo la tensione. I <strong>Wh</strong> misurano invece l'energia reale (Wh = Ah × Volt). Calcolando in Wh, tutto diventa più semplice e non si sbaglia se il sistema è a 12V, 24V o 48V.</p>
+        </article>
+
+        <article>
+          <h2>Formula base per la batteria</h2>
+          <p>La formula universale parte dal consumo giornaliero stimato (in Wh). A questo applichi un margine di sicurezza (es. +25%), e lo moltiplichi per i "Giorni di Autonomia". Il risultato va diviso per la "Profondità di Scarica massima" tollerabile (es. 0.8 per LiFePO4). Il valore ottenuto è l'energia nominale (Wh) che la tua batteria dovrà possedere.</p>
+        </article>
+
+        <article>
+          <h2>Perché conta la tensione</h2>
+          <p>Una batteria da 100Ah a 12V ha 1200 Wh di energia (100×12). Una batteria da 100Ah a 24V ha il doppio dell'energia: 2400 Wh (100×24). Per questo, una volta ottenuti i Wh necessari dalla formula precedente, dividerai quel valore per la tensione del tuo sistema (12, 24 o 48) per trovare gli Ah nominali che devi acquistare.</p>
+        </article>
+
+        <article>
+          <h2>Profondità di scarica: LiFePO4 vs AGM</h2>
+          <p>La profondità di scarica (DoD = Depth of Discharge) è il fattore che cambia maggiormente le carte in tavola. Le classiche batterie al piombo (acido libero, Gel, AGM) si degradano molto velocemente se scaricate regolarmente oltre il 50%. Le moderne batterie al litio ferro fosfato (LiFePO4) tollerano agevolmente scariche dell'80% o 90%. Questo significa che con LiFePO4 avrai bisogno di una batteria (in Ah) quasi la metà rispetto all'AGM.</p>
+        </article>
+
+        <article>
+          <h2>Giorni di autonomia</h2>
+          <p>È il numero di giorni in cui presumi che i pannelli non producano nulla (es. pioggia ininterrotta o neve). In estate, 1.5 o 2 giorni sono uno standard accettabile. In inverno o per abitazioni stabili, serve molta più autonomia (3-5 giorni) oppure bisogna integrare il sistema con un generatore.</p>
+        </article>
+
+        <article>
+          <h2>Esempio numerico semplice</h2>
+          <p>Consumi 1000 Wh al giorno. Vuoi 2 giorni di autonomia (1000 × 2 = 2000 Wh necessari). Hai scelto una batteria LiFePO4 da scaricare max all'80% (2000 / 0.8 = 2500 Wh nominali). Hai un impianto a 12V (2500 Wh / 12 V = ~208 Ah). Ti serve una batteria al litio da almeno 200 Ah.</p>
+        </article>
+
+        <article>
+          <h2>Errori comuni</h2>
+          <p>Sottostimare l'uso dei piccoli carichi continui, dimenticare che l'inverter "ruba" fino al 10-15% di energia nella conversione (efficienza), o non bilanciare bene la potenza di scarica in caso di carichi con spunti improvvisi. La capacità (Ah) non è l'unico parametro: verifica sempre quanti Ampere di corrente massima la batteria può erogare senza andare in protezione (o rovinarsi).</p>
+        </article>
+      </div>
+
+      <div class="actions" style="margin-top: 40px; text-align: center; justify-content: center;">
+        <a class="button primary" href="../#calcolatore" style="font-size: 1.1rem; padding: 14px 24px;">Fai un test pratico col calcolatore</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">Domande Frequenti</p>
+        <h2 id="faq-title">FAQ Calcolo Batterie</h2>
+      </div>
+      <div class="faq-list">
+        <article>
+          <h3>Come si calcola una batteria in Ah?</h3>
+          <p>Per ottenere gli Ampere-ora (Ah), devi dividere i Watt-ora (Wh) totali necessari per la tensione del tuo sistema (12V, 24V o 48V).</p>
+        </article>
+        <article>
+          <h3>Cosa significa Wh?</h3>
+          <p>Wh (Watt-ora) è l'unità di misura dell'energia. Rappresenta una potenza di 1 Watt erogata per 1 ora. È la grandezza più utile per stimare i consumi e dimensionare i componenti.</p>
+        </article>
+        <article>
+          <h3>Perché LiFePO4 richiede meno capacità nominale?</h3>
+          <p>Perché le batterie al litio LiFePO4 permettono una profondità di scarica (DoD) dell'80-90% senza rovinarsi, a differenza delle AGM che andrebbero scaricate al massimo fino al 50%.</p>
+        </article>
+        <article>
+          <h3>Quanti giorni di autonomia scegliere?</h3>
+          <p>Dipende dall'applicazione. Per camper o barca in estate bastano 1,5-2 giorni. Per una baita o una casa isolata, dove il servizio non può mai mancare, si calcolano 3 o più giorni.</p>
+        </article>
+        <article>
+          <h3>Il calcolo vale per qualsiasi impianto?</h3>
+          <p>I principi fisici (Wh, Ah, tensione) sono universali, ma il calcolo teorico va poi adattato alle specifiche dei prodotti scelti e verificato da un tecnico per la sicurezza.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="use-cases">
+      <div class="section-heading">
+        <h2 id="internal-links-title">Esplora altre guide</h2>
+      </div>
+      <div class="case-grid">
+        <article>
+          <h3><a href="../camper/">Calcolo solare camper</a></h3>
+          <p>Vedi l'applicazione pratica del dimensionamento batterie su un furgone camperizzato o un camper.</p>
+        </article>
+        <article>
+          <h3><a href="../baita/">Fotovoltaico per baita</a></h3>
+          <p>Scopri l'impatto dei giorni d'autonomia su impianti fissi come le baite in montagna.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>IsolaWatt Solar Sizer</span>
+    <a href="../privacy/">Privacy</a>
+    <a href="mailto:support@isolawatt.com">support@isolawatt.com</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calcolo pannelli solari camper — batteria, inverter e consumi | IsolaWatt</title>
+  <meta name="description" content="Stima consumi, batteria, pannelli solari, inverter e MPPT per un camper. Esempi pratici con frigo 12V, luci, pompa, laptop e smartphone.">
+  <meta property="og:image" content="https://isolawatt.com/assets/isolawatt-logo-512.png">
+  <link rel="canonical" href="https://isolawatt.com/camper/">
+  <link rel="icon" href="../assets/isolawatt-logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/isolawatt-logo-512.png">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../app.js" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Quanti pannelli solari servono per un camper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dipende dai consumi. Per un uso base bastano 100-200W, ma con un frigo a compressore 12V e un uso prolungato si consigliano almeno 300W."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Meglio batteria AGM o LiFePO4 in camper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La LiFePO4 è più leggera, dura più cicli e permette una scarica più profonda. L'AGM costa meno all'inizio ma è più pesante e richiede capacità nominale maggiore."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Il frigo 12V consuma molto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì, un frigo a compressore è spesso il carico principale in camper. Può consumare dai 300 ai 600 Wh al giorno, incidendo molto sul dimensionamento della batteria."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posso usare un inverter piccolo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sì, se alimenti solo carichi leggeri (come laptop o ricariche). Devi però dimensionarlo in base al picco dei dispositivi AC accesi contemporaneamente."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Il calcolo sostituisce un installatore?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Questa guida e il nostro calcolatore forniscono una stima preliminare. Per la posa in opera e la sicurezza elettrica, affidati sempre a personale qualificato."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="IsolaWatt home">
+      <img class="brand-mark" src="../assets/isolawatt-logo.svg" alt="" width="38" height="38">
+      <span>IsolaWatt</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigazione principale">
+      <a href="../#calcolatore">Calcolatore</a>
+      <a href="../camper/">Camper</a>
+      <a href="../barca/">Barca</a>
+      <a href="../baita/">Baita</a>
+      <a href="../casa-isolata/">Casa isolata</a>
+      <a href="../privacy/">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Guida pratica IsolaWatt</p>
+        <h1 id="hero-title">Calcolo pannelli solari per camper</h1>
+        <p class="lead">
+          Scopri come stimare consumi, batteria, inverter e regolatore MPPT per il tuo camper, furgone camperizzato o van.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="../#preset=camper-frigo">Apri il calcolatore camper</a>
+        </div>
+        <p class="trust-note">Stima preliminare, non certificazione tecnica. Nessun dato viene inviato a IsolaWatt.</p>
+      </div>
+    </section>
+
+    <section class="content-band">
+      <div class="seo-guide">
+        <article>
+          <h2>Perché partire dai consumi reali</h2>
+          <p>La regola d'oro per dimensionare l'impianto solare del camper è non procedere "a naso". Inizia elencando i dispositivi che userai, la loro potenza in Watt e le ore stimate di accensione giornaliera. Questo ti darà il consumo totale in Wh/giorno, che è il fondamento per scegliere tutto il resto.</p>
+        </article>
+
+        <article>
+          <h2>Esempio camper weekend</h2>
+          <p>Se usi il camper solo per brevi weekend estivi, i tuoi consumi saranno minimi: qualche luce LED, la pompa dell'acqua e la ricarica degli smartphone. Spesso, una piccola batteria e un pannello da 100-150W sono sufficienti per coprire questi carichi essenziali.</p>
+        </article>
+
+        <article>
+          <h2>Esempio camper con frigo 12V</h2>
+          <p>Un frigorifero a compressore da 12V cambia le regole del gioco. Anche se è efficiente, rimane acceso 24 ore su 24 e diventa rapidamente il carico più "pesante". In questo scenario, ti serviranno tipicamente almeno 300W di pannelli e una buona batteria (es. 100Ah LiFePO4) per avere un po' di autonomia quando c'è poco sole.</p>
+        </article>
+
+        <article>
+          <h2>Quanta batteria serve</h2>
+          <p>La batteria funge da riserva. La capacità necessaria dipende dal consumo giornaliero, dai giorni di autonomia desiderati (di solito 2 per i camper) e dal tipo di chimica (le LiFePO4 possono essere scaricate più in profondità rispetto alle AGM, risultando più leggere ed efficienti a parità di energia utilizzabile).</p>
+        </article>
+
+        <article>
+          <h2>Quanti pannelli servono</h2>
+          <p>Il tetto del camper offre uno spazio limitato. Calcola i Watt di picco (Wp) dei pannelli in base al consumo, diviso per le ore di sole equivalenti medie del periodo e della zona in cui viaggerai. Considera anche le ombre dovute a oblò o antenne e il fatto che i pannelli saranno montati in piano.</p>
+        </article>
+
+        <article>
+          <h2>Inverter: quando serve davvero</h2>
+          <p>L'inverter serve solo se hai apparecchi a 230V, come un phon, una macchinetta del caffè o il caricabatterie di un laptop (se non hai un alimentatore DC-DC). L'inverter ha un proprio consumo e un'efficienza imperfetta (spesso attorno all'85-90%): usalo solo quando strettamente necessario per non sprecare l'energia della batteria.</p>
+        </article>
+      </div>
+
+      <div class="actions" style="margin-top: 40px; text-align: center; justify-content: center;">
+        <a class="button primary" href="../#preset=camper-frigo" style="font-size: 1.1rem; padding: 14px 24px;">Apri il calcolatore con preset camper</a>
+      </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-title">
+      <div class="section-heading">
+        <p class="eyebrow">Domande Frequenti</p>
+        <h2 id="faq-title">FAQ Fotovoltaico Camper</h2>
+      </div>
+      <div class="faq-list">
+        <article>
+          <h3>Quanti pannelli solari servono per un camper?</h3>
+          <p>Dipende dai consumi. Per un uso base bastano 100-200W, ma con un frigo a compressore 12V e un uso prolungato si consigliano almeno 300W.</p>
+        </article>
+        <article>
+          <h3>Meglio batteria AGM o LiFePO4 in camper?</h3>
+          <p>La LiFePO4 è più leggera, dura più cicli e permette una scarica più profonda. L'AGM costa meno all'inizio ma è più pesante e richiede capacità nominale maggiore.</p>
+        </article>
+        <article>
+          <h3>Il frigo 12V consuma molto?</h3>
+          <p>Sì, un frigo a compressore è spesso il carico principale in camper. Può consumare dai 300 ai 600 Wh al giorno, incidendo molto sul dimensionamento della batteria.</p>
+        </article>
+        <article>
+          <h3>Posso usare un inverter piccolo?</h3>
+          <p>Sì, se alimenti solo carichi leggeri (come laptop o ricariche). Devi però dimensionarlo in base al picco dei dispositivi AC accesi contemporaneamente.</p>
+        </article>
+        <article>
+          <h3>Il calcolo sostituisce un installatore?</h3>
+          <p>No. Questa guida e il nostro calcolatore forniscono una stima preliminare. Per la posa in opera e la sicurezza elettrica, affidati sempre a personale qualificato.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="use-cases">
+      <div class="section-heading">
+        <h2 id="internal-links-title">Esplora altre guide</h2>
+      </div>
+      <div class="case-grid">
+        <article>
+          <h3><a href="../calcolo-batteria-fotovoltaico/">Calcolo batteria fotovoltaico</a></h3>
+          <p>Guida approfondita per capire Wh, Ah, e profondità di scarica per il tuo impianto.</p>
+        </article>
+        <article>
+          <h3><a href="../barca/">Kit solare barca</a></h3>
+          <p>Scopri in cosa differisce l'impianto solare di una barca in rada rispetto a un camper.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>IsolaWatt Solar Sizer</span>
+    <a href="../privacy/">Privacy</a>
+    <a href="mailto:support@isolawatt.com">support@isolawatt.com</a>
+  </footer>
+</body>
+</html>
