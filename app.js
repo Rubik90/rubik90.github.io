@@ -13,6 +13,7 @@
 
   // constants
   const STORAGE_KEY = "isolawatt.project.v2";
+  const AUTOSAVE_KEY = "isolawatt.autosave.v1";
   const SHARE_PREFIX = "iw=";
   const DEFAULT_PRESET = "camper-frigo";
   const DEFAULTS = {
@@ -265,7 +266,9 @@
   // state
   let state = createDefaultState();
   let latestReportText = "";
+  let latestComponentsText = "";
   let latestResults = null;
+  let autosaveTimer = 0;
 
   // DOM refs
   const form = document.getElementById("solar-form");
@@ -303,6 +306,8 @@
     resultSummary: document.getElementById("resultSummary"),
     configurationResult: document.getElementById("configurationResult"),
     confidenceResult: document.getElementById("confidenceResult"),
+    recommendationHeadline: document.getElementById("recommendationHeadline"),
+    recommendationText: document.getElementById("recommendationText"),
     realDailyWh: document.getElementById("realDailyWh"),
     adjustedDailyWh: document.getElementById("adjustedDailyWh"),
     batteryResult: document.getElementById("batteryResult"),
@@ -319,6 +324,9 @@
     pvExplanation: document.getElementById("pvExplanation"),
     printReport: document.getElementById("printReport"),
     toggleReportPreview: document.getElementById("toggleReportPreview"),
+    componentChecklist: document.getElementById("componentChecklist"),
+    fitChecks: document.getElementById("fitChecks"),
+    copyComponents: document.getElementById("copyComponents"),
     copyReport: document.getElementById("copyReport"),
     printResults: document.getElementById("printResults"),
     appSummaryBar: document.getElementById("appSummaryBar"),
@@ -326,12 +334,15 @@
     saveProject: document.getElementById("saveProject"),
     loadProject: document.getElementById("loadProject"),
     clearProject: document.getElementById("clearProject"),
+    localSaveStatus: document.getElementById("localSaveStatus"),
     copyProjectLink: document.getElementById("copyProjectLink"),
     reportMeta: document.getElementById("reportMeta"),
     reportScenario: document.getElementById("reportScenario"),
     reportLoads: document.getElementById("reportLoads"),
     reportParameters: document.getElementById("reportParameters"),
     reportResults: document.getElementById("reportResults"),
+    reportComponents: document.getElementById("reportComponents"),
+    reportChecks: document.getElementById("reportChecks"),
     reportComparison: document.getElementById("reportComparison")
   };
 
@@ -556,8 +567,7 @@
     const controllerA = ceilTo(pvWp / settings.systemVoltage * 1.25, 5);
     const confidence = getConfidence(dailyWh, settings, loadSummary);
     const comparison = getBatteryComparison(adjustedDailyWh, settings);
-
-    return {
+    const draftResult = {
       settings,
       loadSummary,
       dailyWh,
@@ -568,7 +578,17 @@
       inverterW,
       controllerA,
       confidence,
-      comparison,
+      comparison
+    };
+    const recommendation = getRecommendation(draftResult);
+    const componentChecklist = getComponentChecklist(draftResult);
+    const fitChecks = getFitChecks(draftResult);
+
+    return {
+      ...draftResult,
+      recommendation,
+      componentChecklist,
+      fitChecks,
       error: ""
     };
   }
@@ -615,6 +635,73 @@
     };
   }
 
+  function getRecommendation(result) {
+    const settings = result.settings;
+    const batteryLabel = BATTERY_LABELS[settings.batteryType];
+    const headline = `Parti da circa ${formatWh(result.batteryWh)} di batteria, ${formatWp(result.pvWp)} di pannelli e MPPT ${formatNumber(result.controllerA)} A.`;
+    const voltageNote = settings.systemVoltage === 12 && (result.batteryAh > 250 || result.controllerA > 50)
+      ? "Per questa taglia valuta seriamente 24 V: riduce correnti, sezioni cavi e stress sui componenti."
+      : `La configurazione ${formatNumber(settings.systemVoltage)} V / ${batteryLabel} è coerente con questo scenario preliminare.`;
+    const confidenceNote = result.confidence.level === "basso"
+      ? "Usala come ordine di grandezza e fai verificare il progetto prima di acquistare componenti importanti."
+      : "Puoi usarla per confrontare kit e componenti, verificando sempre schede tecniche e protezioni.";
+
+    return {
+      headline,
+      text: `${voltageNote} ${confidenceNote}`
+    };
+  }
+
+  function getComponentChecklist(result) {
+    const settings = result.settings;
+    const batteryLabel = BATTERY_LABELS[settings.batteryType];
+    const hasAcLoads = result.loadSummary.acWh > 0;
+
+    return [
+      `Batteria ${batteryLabel}: circa ${formatWh(result.batteryWh)} nominali (${formatNumber(result.batteryAh)} Ah a ${formatNumber(settings.systemVoltage)} V), con BMS/protezioni coerenti con inverter e carichi critici.`,
+      `Pannelli FV: circa ${formatWp(result.pvWp)} totali, con tensione/corrente compatibili con il regolatore scelto.`,
+      `Regolatore MPPT: almeno ${formatNumber(result.controllerA)} A lato batteria, verificando limiti di tensione pannelli e corrente di carica.`,
+      hasAcLoads
+        ? `Inverter sinusoidale: almeno ${formatNumber(result.inverterW)} W, dimensionato sui carichi AC accesi insieme.`
+        : "Inverter: non indispensabile se tutti i carichi restano DC; aggiungilo solo per dispositivi AC reali.",
+      "Protezione e cablaggio: fusibili, sezionatori, cavi e connettori dimensionati sulla corrente massima prevista.",
+      "Installazione: fissaggi, ventilazione, accesso manutenzione e protezione da acqua, vibrazioni e temperatura."
+    ];
+  }
+
+  function getFitChecks(result) {
+    const checks = [];
+    const settings = result.settings;
+    const warningCount = result.loadSummary.rows.reduce((total, row) => total + row.warnings.length, 0);
+
+    if (warningCount > 0) {
+      checks.push({ level: "warn", text: "Correggi i carichi segnalati: watt e ore/giorno influenzano molto la stima finale." });
+    }
+    if (settings.peakSunHours < 2) {
+      checks.push({ level: "risk", text: "Ore di sole molto basse: serve più pannello, più batteria o un piano di ricarica alternativo." });
+    }
+    if (result.dailyWh > 5000 && settings.systemVoltage === 12) {
+      checks.push({ level: "risk", text: "Consumi elevati su 12 V: valuta 24 V o 48 V con un tecnico per ridurre correnti e cadute di tensione." });
+    }
+    if (result.controllerA > 60 && settings.systemVoltage === 12) {
+      checks.push({ level: "warn", text: "Corrente MPPT alta su 12 V: controlla se conviene aumentare la tensione del sistema." });
+    }
+    if (result.batteryAh > 250 && settings.systemVoltage === 12) {
+      checks.push({ level: "warn", text: "Banco batteria grande su 12 V: verifica correnti, cavi, fusibili e BMS prima dell'acquisto." });
+    }
+    if (result.loadSummary.acWh > result.loadSummary.dcWh && result.loadSummary.acWh > 0) {
+      checks.push({ level: "info", text: "I carichi AC pesano molto: dove possibile usa alimentatori DC per ridurre perdite inverter." });
+    }
+    if (result.loadSummary.criticalCount === 0) {
+      checks.push({ level: "info", text: "Nessun carico critico selezionato: marca frigo, luci o pompe essenziali per ragionare meglio sull'autonomia." });
+    }
+    if (checks.length === 0) {
+      checks.push({ level: "ok", text: "Scenario coerente per una stima preliminare: verifica comunque schede tecniche, protezioni e condizioni reali." });
+    }
+
+    return checks;
+  }
+
   // rendering
   function render() {
     syncFields();
@@ -631,6 +718,7 @@
 
     renderResults(result);
     renderReport(result);
+    scheduleAutosave();
     renderFeedback("Risultati aggiornati in tempo reale.", false);
   }
 
@@ -795,6 +883,10 @@
     dom.batteryDetail.textContent = "Dato non disponibile.";
     dom.controllerDetail.textContent = "Dato non disponibile.";
     dom.resultSummary.textContent = "Correggi i dati per aggiornare il dimensionamento.";
+    dom.recommendationHeadline.textContent = "-";
+    dom.recommendationText.textContent = "Correggi i dati per ottenere una raccomandazione pratica.";
+    dom.componentChecklist.innerHTML = "";
+    dom.fitChecks.innerHTML = "";
     dom.lifepo4Comparison.textContent = "-";
     dom.agmComparison.textContent = "-";
     dom.comparisonDifference.textContent = "-";
@@ -802,8 +894,11 @@
     dom.reportLoads.textContent = "";
     dom.reportParameters.textContent = "";
     dom.reportResults.textContent = "";
+    dom.reportComponents.textContent = "";
+    dom.reportChecks.textContent = "";
     dom.reportComparison.textContent = "";
     latestReportText = "";
+    latestComponentsText = "";
     updateMiniSummary(null);
     renderFeedback(result.error, true);
   }
@@ -818,6 +913,8 @@
     dom.configurationResult.textContent = config;
     dom.confidenceResult.textContent = `Livello confidenza: ${result.confidence.level} - ${result.confidence.reason}`;
     dom.confidenceResult.className = `confidence ${result.confidence.className}`;
+    dom.recommendationHeadline.textContent = result.recommendation.headline;
+    dom.recommendationText.textContent = result.recommendation.text;
     dom.realDailyWh.textContent = `${formatWh(result.dailyWh)} / giorno`;
     dom.adjustedDailyWh.textContent = `${formatWh(result.adjustedDailyWh)} / giorno`;
     dom.batteryResult.textContent = `${formatWh(result.batteryWh)} / ${formatNumber(result.batteryAh)} Ah`;
@@ -832,8 +929,30 @@
     dom.comparisonNote.textContent = "A parità di consumi, AGM richiede più capacità nominale perché usa una profondità di scarica inferiore.";
     dom.batteryExplanation.textContent = `Uso ${formatWh(result.adjustedDailyWh)} al giorno per ${formatDecimal(settings.autonomyDays, 1)} giorni e DoD ${formatDecimal(settings.maxDepthOfDischarge * 100, 0)}%.`;
     dom.pvExplanation.textContent = `Divido il consumo con margine per ${formatDecimal(settings.peakSunHours, 1)} ore di sole e applico fattore perdite x${formatDecimal(settings.pvLossFactor, 2)}.`;
+    renderComponentChecklist(result);
+    renderFitChecks(result);
     updateMiniSummary(result);
     pulseResults();
+  }
+
+  function renderComponentChecklist(result) {
+    dom.componentChecklist.innerHTML = result.componentChecklist
+      .map(item => `<li>${escapeHtml(item)}</li>`)
+      .join("");
+    latestComponentsText = [
+      "Checklist componenti IsolaWatt",
+      `Scenario: ${getPresetLabel()}`,
+      "",
+      ...result.componentChecklist.map(item => `- ${item}`),
+      "",
+      "Stima preliminare: verifica sempre schede tecniche, protezioni e normativa applicabile."
+    ].join("\n");
+  }
+
+  function renderFitChecks(result) {
+    dom.fitChecks.innerHTML = result.fitChecks
+      .map(item => `<li class="fit-${item.level}">${escapeHtml(item.text)}</li>`)
+      .join("");
   }
 
   function updateMiniSummary(result) {
@@ -866,6 +985,8 @@
     dom.reportLoads.innerHTML = buildReportLoadsTable(result);
     dom.reportParameters.innerHTML = buildReportParametersList(result);
     dom.reportResults.innerHTML = buildReportResultsList(result);
+    dom.reportComponents.innerHTML = buildReportComponentList(result);
+    dom.reportChecks.innerHTML = buildReportChecksList(result);
     dom.reportComparison.innerHTML = buildReportComparisonList(result);
     latestReportText = buildReportText(result, generatedAt);
   }
@@ -932,6 +1053,22 @@
     `;
   }
 
+  function buildReportComponentList(result) {
+    return `
+      <ul>
+        ${result.componentChecklist.map(item => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    `;
+  }
+
+  function buildReportChecksList(result) {
+    return `
+      <ul>
+        ${result.fitChecks.map(item => `<li>${escapeHtml(item.text)}</li>`).join("")}
+      </ul>
+    `;
+  }
+
   function buildReportComparisonList(result) {
     return `
       <ul>
@@ -981,6 +1118,16 @@
       `Regolatore MPPT consigliato: ${formatNumber(result.controllerA)} A`,
       `Configurazione suggerita: ${dom.configurationResult.textContent}`,
       `Livello confidenza: ${result.confidence.level}`,
+      "",
+      "Raccomandazione pratica:",
+      `- ${result.recommendation.headline}`,
+      `- ${result.recommendation.text}`,
+      "",
+      "Checklist componenti:",
+      ...result.componentChecklist.map(item => `- ${item}`),
+      "",
+      "Controlli pratici:",
+      ...result.fitChecks.map(item => `- ${item.text}`),
       "",
       "Confronto LiFePO4 vs AGM:",
       `- LiFePO4: ${formatWh(result.comparison.lifepo4Wh)} / ${formatNumber(result.comparison.lifepo4Ah)} Ah`,
@@ -1208,12 +1355,45 @@
     render();
   }
 
+  function scheduleAutosave() {
+    if (!storageAvailable()) {
+      updateLocalSaveStatus("Autosave locale non disponibile in questo browser.", true);
+      return;
+    }
+
+    window.clearTimeout(autosaveTimer);
+    autosaveTimer = window.setTimeout(() => {
+      try {
+        window.localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(getProjectSnapshot()));
+        updateLocalSaveStatus("Autosave locale aggiornato. Nessun dato viene inviato a IsolaWatt.", false);
+      } catch (error) {
+        updateLocalSaveStatus("Autosave locale non riuscito: spazio browser o permessi insufficienti.", true);
+      }
+    }, 500);
+  }
+
+  function getSavedProjectRaw() {
+    const manual = window.localStorage.getItem(STORAGE_KEY);
+    return manual || window.localStorage.getItem(AUTOSAVE_KEY);
+  }
+
+  function updateLocalSaveStatus(message, isError) {
+    if (!dom.localSaveStatus) {
+      return;
+    }
+
+    dom.localSaveStatus.textContent = message;
+    dom.localSaveStatus.classList.toggle("is-error", isError);
+  }
+
   function saveProject() {
     if (!storageAvailable()) {
       renderFeedback("Salvataggio locale non disponibile in questo browser.", true);
       return;
     }
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(getProjectSnapshot()));
+    window.localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(getProjectSnapshot()));
+    updateLocalSaveStatus("Progetto salvato nel browser. I dati restano solo su questo dispositivo.", false);
     renderFeedback("Progetto salvato nel browser.", false);
   }
 
@@ -1222,7 +1402,7 @@
       renderFeedback("Salvataggio locale non disponibile in questo browser.", true);
       return;
     }
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = getSavedProjectRaw();
     if (!raw) {
       renderFeedback("Nessun progetto locale salvato.", true);
       return;
@@ -1241,6 +1421,8 @@
       return;
     }
     window.localStorage.removeItem(STORAGE_KEY);
+    window.localStorage.removeItem(AUTOSAVE_KEY);
+    updateLocalSaveStatus("Dati locali cancellati dal browser.", false);
     renderFeedback("Dati locali cancellati dal browser.", false);
   }
 
@@ -1346,6 +1528,17 @@
       return;
     }
     await copyText(latestReportText, "Report copiato negli appunti.");
+  }
+
+  async function copyComponentList() {
+    if (!latestComponentsText && latestResults && !latestResults.error) {
+      renderComponentChecklist(latestResults);
+    }
+    if (!latestComponentsText) {
+      renderFeedback("Non ci sono componenti validi da copiare.", true);
+      return;
+    }
+    await copyText(latestComponentsText, "Checklist componenti copiata negli appunti.");
   }
 
   function toggleReportPreview() {
@@ -1486,6 +1679,7 @@
     dom.loadProject.addEventListener("click", loadSavedProject);
     dom.clearProject.addEventListener("click", clearSavedProject);
     dom.copyProjectLink.addEventListener("click", copyProjectLink);
+    dom.copyComponents.addEventListener("click", copyComponentList);
     dom.copyReport.addEventListener("click", copyReport);
     if (dom.toggleReportPreview) {
       dom.toggleReportPreview.addEventListener("click", toggleReportPreview);
@@ -1566,6 +1760,12 @@
       dom.saveProject.title = "LocalStorage non disponibile.";
       dom.loadProject.title = "LocalStorage non disponibile.";
       dom.clearProject.title = "LocalStorage non disponibile.";
+      updateLocalSaveStatus("Salvataggio locale non disponibile in questo browser.", true);
+      return;
+    }
+
+    if (window.localStorage.getItem(STORAGE_KEY) || window.localStorage.getItem(AUTOSAVE_KEY)) {
+      updateLocalSaveStatus("Bozza locale disponibile: puoi caricarla o continuare con i dati attuali.", false);
     }
   }
 

@@ -6,9 +6,11 @@ domain configured in `CNAME`.
 The homepage is a commercial MVP for IsolaWatt Solar Sizer: landing page,
 off-grid photovoltaic calculator, editable load list, scenario presets, live
 sizing results, local browser project save, shareable project links, and a mini
-report that can be copied or printed to PDF from the browser. It is also a small
-installable PWA: supported browsers can cache the static pages for offline use
-after the first visit. It uses only HTML, CSS, and vanilla JavaScript.
+report that can be copied or printed to PDF from the browser. The calculator now
+also shows a practical recommendation, a copyable component checklist, fit
+checks before purchase, and local autosave. It is a small installable PWA:
+supported browsers can cache the static pages for offline use after the first
+visit. It uses only HTML, CSS, and vanilla JavaScript.
 
 Required public URL for Google Play:
 
@@ -19,7 +21,7 @@ https://isolawatt.com/privacy/
 ## Files
 
 - `index.html`: Italian landing page and calculator shell.
-- `app.js`: browser-only solar sizing calculator, presets, local save, share links, navigation, and PWA registration.
+- `app.js`: browser-only solar sizing calculator, presets, local save/autosave, copyable reports/checklists, share links, navigation, and PWA registration.
 - `styles.css`: shared responsive and print styling.
 - `manifest.webmanifest`: PWA metadata, icons, display mode, and shortcuts.
 - `service-worker.js`: same-origin static cache for offline use. It does not call external services.

@@ -346,6 +346,7 @@
               <button class="button ghost" type="button" id="clearProject">Cancella dati locali</button>
               <button class="button secondary" type="button" id="copyProjectLink">Copia link progetto</button>
             </div>
+            <p class="helper-text save-status" id="localSaveStatus">Autosave locale pronto: resta nel tuo browser e non viene inviato a IsolaWatt.</p>
             <p class="helper-text">Il link include solo impostazioni e carichi: evita dati personali nei nomi dei carichi.</p>
           </section>
 
@@ -365,6 +366,13 @@
               <strong id="configurationResult">-</strong>
               <p id="confidenceResult">Livello confidenza: -</p>
             </div>
+
+            <section class="decision-card" aria-labelledby="recommendation-title">
+              <span class="metric-label">Raccomandazione pratica</span>
+              <h3 id="recommendation-title">Cosa dimensionare</h3>
+              <strong id="recommendationHeadline">-</strong>
+              <p id="recommendationText">Scegli un preset o modifica i carichi per ottenere una raccomandazione leggibile.</p>
+            </section>
 
             <div class="results-grid" aria-live="polite">
               <article class="result-card">
@@ -398,6 +406,20 @@
                 <p id="controllerDetail">Corrente minima sul lato batteria.</p>
               </article>
             </div>
+
+            <section class="component-panel" aria-labelledby="component-title">
+              <div>
+                <h3 id="component-title">Checklist componenti orientativa</h3>
+                <p class="helper-text">Usala come lista di controllo preliminare, non come distinta tecnica definitiva.</p>
+              </div>
+              <ul class="component-list" id="componentChecklist"></ul>
+              <button class="button secondary" type="button" id="copyComponents">Copia checklist componenti</button>
+            </section>
+
+            <section class="fit-panel" aria-labelledby="fit-title">
+              <h3 id="fit-title">Controlli prima di comprare</h3>
+              <ul class="fit-list" id="fitChecks"></ul>
+            </section>
 
             <section class="comparison-panel" aria-labelledby="comparison-title">
               <h3 id="comparison-title">Confronto LiFePO4 vs AGM</h3>
@@ -475,6 +497,14 @@
         <section>
           <h3>Risultati</h3>
           <div id="reportResults"></div>
+        </section>
+        <section>
+          <h3>Checklist componenti</h3>
+          <div id="reportComponents"></div>
+        </section>
+        <section>
+          <h3>Controlli pratici</h3>
+          <div id="reportChecks"></div>
         </section>
         <section>
           <h3>Confronto batterie</h3>

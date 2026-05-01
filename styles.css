@@ -785,6 +785,10 @@ h3 {
   color: #a6422c;
 }
 
+.save-status.is-error {
+  color: #a6422c;
+}
+
 .results-shell {
   min-width: 0;
 }
@@ -804,6 +808,34 @@ h3 {
   margin-top: 8px;
   font-size: clamp(1.2rem, 3vw, 1.6rem);
   line-height: 1.15;
+}
+
+.decision-card,
+.component-panel,
+.fit-panel {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fcfdfb;
+  padding: 16px;
+}
+
+.decision-card {
+  border-color: rgba(8, 127, 115, 0.28);
+  background: linear-gradient(135deg, rgba(8, 127, 115, 0.09), rgba(255, 255, 255, 0.92));
+}
+
+.decision-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: clamp(1.08rem, 3vw, 1.32rem);
+  line-height: 1.25;
+}
+
+.decision-card p,
+.component-panel p {
+  margin: 8px 0 0;
+  color: var(--muted);
 }
 
 .confidence {
@@ -880,6 +912,59 @@ h3 {
 
 .comparison-panel p {
   color: var(--muted);
+}
+
+.component-list,
+.fit-list {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.component-list li,
+.fit-list li {
+  position: relative;
+  border: 1px solid var(--soft-line);
+  border-radius: 8px;
+  background: var(--paper);
+  padding: 11px 12px 11px 34px;
+}
+
+.component-list li::before,
+.fit-list li::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 17px;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--teal);
+}
+
+.fit-list .fit-risk {
+  border-color: rgba(217, 107, 76, 0.42);
+  background: var(--danger-bg);
+}
+
+.fit-list .fit-warn {
+  border-color: rgba(242, 183, 5, 0.55);
+  background: var(--warning-bg);
+}
+
+.fit-list .fit-info {
+  background: var(--teal-bg);
+}
+
+.fit-list .fit-risk::before,
+.fit-list .fit-warn::before {
+  background: var(--coral);
+}
+
+.fit-list .fit-ok::before {
+  background: var(--deep-teal);
 }
 
 .details-list {

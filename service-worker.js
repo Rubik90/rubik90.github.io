@@ -1,4 +1,4 @@
-const CACHE_NAME = "isolawatt-static-v1";
+const CACHE_NAME = "isolawatt-static-v2";
 const STATIC_ASSETS = [
   "/",
   "/index.html",
