@@ -6,6 +6,8 @@
   document.documentElement.classList.add("has-js");
   initNavigation();
   initPwa();
+  initScrollProgress();
+  initSectionReveal();
 
   if (!document.getElementById("solar-form")) {
     return;
@@ -47,6 +49,45 @@
   const PRESET_ALIASES = {
     "casa-isolata": "casa-essenziale"
   };
+  function initScrollProgress() {
+    const bar = document.getElementById("scrollProgress");
+    if (!bar) {
+      return;
+    }
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.width = docHeight > 0 ? `${(scrollTop / docHeight) * 100}%` : "0";
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  function initSectionReveal() {
+    if (!("IntersectionObserver" in window)) {
+      return;
+    }
+    const sections = document.querySelectorAll(".content-band, .use-cases, .guides-section, .checklist-section, .faq-section, .monetization");
+    for (const section of sections) {
+      section.classList.add("reveal-section");
+    }
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    for (const section of sections) {
+      observer.observe(section);
+    }
+  }
 
   function initNavigation() {
     const header = document.querySelector(".site-header");

@@ -30,8 +30,22 @@ body {
   background:
     linear-gradient(180deg, rgba(242, 183, 5, 0.12), rgba(8, 127, 115, 0.08) 34%, transparent 68%),
     var(--surface);
-  font-family: "Aptos", "Segoe UI", sans-serif;
+  font-family: "Inter", "Aptos", "Segoe UI", system-ui, sans-serif;
   line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, var(--teal), var(--solar));
+  z-index: 100;
+  transition: width 0.1s linear;
+  pointer-events: none;
 }
 
 a {
@@ -54,8 +68,9 @@ button:disabled {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(217, 107, 76, 0.72);
+  outline: 3px solid rgba(8, 127, 115, 0.6);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .sr-only {
@@ -162,6 +177,18 @@ button:disabled {
   grid-template-columns: 1fr;
   gap: 22px;
   padding: 26px 0 38px;
+  animation: fadeInUp 0.6s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-copy {
@@ -1099,15 +1126,54 @@ h3 {
 .monetization {
   margin-top: 8px;
   margin-bottom: 8px;
-  padding: 28px;
+  padding: 32px;
   border: 1px solid rgba(8, 127, 115, 0.28);
-  border-radius: 8px;
-  background: linear-gradient(135deg, rgba(8, 127, 115, 0.1), rgba(242, 183, 5, 0.18));
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(8, 127, 115, 0.08), rgba(242, 183, 5, 0.14));
 }
 
 .monetization p {
   max-width: 720px;
   color: var(--muted);
+}
+
+.monetization-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.monetization-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(8, 127, 115, 0.15);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.monetization-feature:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 33, 31, 0.08);
+}
+
+.monetization-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.monetization-feature strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.monetization-feature p {
+  margin: 0;
+  font-size: 0.92rem;
 }
 
 .print-report {
@@ -1194,12 +1260,50 @@ body[data-mode="simple"] .advanced-only {
   display: none;
 }
 
+.reveal-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal-section.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.result-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(22, 33, 31, 0.1);
+}
+
+.preset-pill {
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.preset-pill.is-active {
+  position: relative;
+}
+
+.preset-pill.is-active::after {
+  content: "✓";
+  margin-left: 6px;
+  font-size: 0.82rem;
+}
+
 @media (min-width: 560px) {
   .metric-grid,
   .results-grid,
   .comparison-grid,
   .load-summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .monetization-features {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .form-grid {
@@ -1545,9 +1649,27 @@ body[data-mode="simple"] .advanced-only {
   .button:hover,
   .preset-pill:hover,
   .segmented-button:hover,
-  .remove-load:hover {
+  .remove-load:hover,
+  .result-card:hover,
+  .monetization-feature:hover {
     transform: none;
   }
+
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.guide-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.guide-cta .button {
+  font-size: 1.1rem;
+  padding: 14px 24px;
 }
 
 @media print {

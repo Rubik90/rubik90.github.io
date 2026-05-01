@@ -19,6 +19,9 @@
   <link rel="icon" href="assets/isolawatt-logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/isolawatt-logo-512.png">
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
   <script type="application/ld+json">
@@ -92,6 +95,8 @@
       <a href="privacy/">Privacy</a>
     </nav>
   </header>
+
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
@@ -654,11 +659,33 @@
     </section>
 
     <section class="monetization" aria-labelledby="monetization-title">
-      <div>
-        <p class="eyebrow">In arrivo</p>
-        <h2 id="monetization-title">Vuoi una guida pratica completa?</h2>
-        <p>Prossimamente: report PDF completo, checklist componenti e guida pratica.</p>
-        <!-- TODO: inserire link Gumroad o Stripe Payment Link solo dopo aggiornamento privacy se necessario. -->
+      <div class="monetization-content">
+        <p class="eyebrow">Già pronto</p>
+        <h2 id="monetization-title">Tutto gratis, tutto nel browser</h2>
+        <p>IsolaWatt è uno strumento gratuito e senza registrazione. Calcola il tuo impianto, genera il report e condividi il link con chi ti aiuta nell'installazione.</p>
+        <div class="monetization-features">
+          <div class="monetization-feature">
+            <span class="monetization-icon">⚡</span>
+            <div>
+              <strong>Calcolo istantaneo</strong>
+              <p>Risultati in tempo reale mentre modifichi i carichi</p>
+            </div>
+          </div>
+          <div class="monetization-feature">
+            <span class="monetization-icon">📋</span>
+            <div>
+              <strong>Report copiabile</strong>
+              <p>Copia o stampa PDF da condividere con il tuo installatore</p>
+            </div>
+          </div>
+          <div class="monetization-feature">
+            <span class="monetization-icon">🔒</span>
+            <div>
+              <strong>Privacy totale</strong>
+              <p>Nessun dato esce dal tuo browser. Zero tracking.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
