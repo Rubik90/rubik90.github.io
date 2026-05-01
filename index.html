@@ -3,12 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#087f73">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="IsolaWatt">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>IsolaWatt — Calcolatore fotovoltaico off-grid per camper, barche e baite</title>
   <meta name="description" content="Calcola gratis consumi, batteria, pannelli, inverter e regolatore MPPT per un impianto solare off-grid. Ideale per camper, barche, baite e case isolate.">
+  <meta property="og:title" content="IsolaWatt — Calcolatore fotovoltaico off-grid">
+  <meta property="og:description" content="Calcola gratis consumi, batteria, pannelli, inverter e regolatore MPPT per camper, barche, baite e case isolate.">
+  <meta property="og:url" content="https://isolawatt.com/">
+  <meta property="og:type" content="website">
   <meta property="og:image" content="https://isolawatt.com/assets/isolawatt-logo-512.png">
   <link rel="canonical" href="https://isolawatt.com/">
   <link rel="icon" href="assets/isolawatt-logo.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/isolawatt-logo-512.png">
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
   <script type="application/ld+json">
@@ -94,6 +104,7 @@
         <div class="actions">
           <a class="button primary" href="#calcolatore">Apri il calcolatore</a>
           <a class="button secondary" href="#preset-panel">Vedi preset</a>
+          <button class="button ghost install-button" type="button" id="installApp" hidden>Installa app</button>
         </div>
         <p class="trust-note">Stima preliminare, non certificazione tecnica. Nessun dato viene inviato a IsolaWatt.</p>
       </div>
@@ -119,6 +130,13 @@
           <div>
             <span class="metric-label">Privacy</span>
             <strong>solo browser</strong>
+          </div>
+        </div>
+        <div class="pwa-card" aria-live="polite">
+          <span class="app-badge">PWA</span>
+          <div>
+            <strong>Installabile e offline</strong>
+            <p id="pwaStatus">Funziona nel browser e può restare disponibile anche senza rete dopo il primo caricamento.</p>
           </div>
         </div>
         <p class="snapshot-note">Sito statico: niente account, cookie, analytics, pixel, API remote o backend.</p>
@@ -422,9 +440,10 @@
             <section class="report-actions-panel" aria-labelledby="report-title">
               <div>
                 <h3 id="report-title">Report PDF/stampa</h3>
-                <p class="helper-text">Copia il report testuale o usa la stampa del browser per salvarlo in PDF.</p>
+                <p class="helper-text">Copia il report testuale o apri l'anteprima solo quando vuoi stamparlo in PDF.</p>
               </div>
               <div class="calculator-actions">
+                <button class="button secondary" type="button" id="toggleReportPreview" aria-expanded="false" aria-controls="printReport">Anteprima report</button>
                 <button class="button primary" type="button" id="copyReport">Copia report</button>
                 <button class="button secondary" type="button" id="printResults">Stampa / salva PDF</button>
               </div>
@@ -477,6 +496,11 @@
         </section>
         <footer class="report-footer">isolawatt.com</footer>
       </article>
+
+      <div class="app-summary-bar" id="appSummaryBar" hidden>
+        <span id="appSummaryText">Stima pronta.</span>
+        <a class="text-button" href="#risultati">Vedi risultato</a>
+      </div>
     </section>
 
     <section class="content-band" id="come-funziona" aria-labelledby="how-title">
@@ -554,13 +578,13 @@
       </div>
     </section>
 
-    <section class="guides-section" aria-labelledby="guides-title" style="padding: 44px 0 58px; border-top: 1px solid var(--line);">
-      <div class="section-heading" style="width: min(1120px, calc(100% - 32px)); margin-inline: auto;">
+    <section class="guides-section" aria-labelledby="guides-title">
+      <div class="section-heading">
         <p class="eyebrow">Risorse</p>
         <h2 id="guides-title">Guide pratiche</h2>
         <p>Approfondisci il dimensionamento solare per il tuo scenario specifico.</p>
       </div>
-      <div class="case-grid" style="width: min(1120px, calc(100% - 32px)); margin-inline: auto;">
+      <div class="case-grid">
         <article>
           <h3><a href="camper/">Calcolo pannelli solari camper</a></h3>
           <p>Stima batteria, inverter e consumi per veicoli ricreazionali.</p>

@@ -1,8 +1,11 @@
 (function () {
   "use strict";
 
+  let deferredInstallPrompt = null;
+
   document.documentElement.classList.add("has-js");
   initNavigation();
+  initPwa();
 
   if (!document.getElementById("solar-form")) {
     return;
@@ -40,6 +43,9 @@
     baita: "Baita",
     "casa-isolata": "Casa isolata"
   };
+  const PRESET_ALIASES = {
+    "casa-isolata": "casa-essenziale"
+  };
 
   function initNavigation() {
     const header = document.querySelector(".site-header");
@@ -72,6 +78,90 @@
         closeNav();
       }
     });
+  }
+
+  function initPwa() {
+    registerServiceWorker();
+    initInstallPrompt();
+  }
+
+  function registerServiceWorker() {
+    if (!("serviceWorker" in navigator)) {
+      setPwaStatus("Questo browser non supporta la modalità offline installabile.");
+      return;
+    }
+
+    const isLocalhost = ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
+    if (window.location.protocol !== "https:" && !isLocalhost) {
+      setPwaStatus("Apri IsolaWatt da HTTPS o localhost per abilitarla come app offline.");
+      return;
+    }
+
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/service-worker.js")
+        .then(() => {
+          setPwaStatus("Pronta per l'uso offline dopo il primo caricamento.");
+        })
+        .catch(() => {
+          setPwaStatus("App usabile online; offline non disponibile in questo browser.");
+        });
+    });
+  }
+
+  function initInstallPrompt() {
+    const installButton = document.getElementById("installApp");
+
+    if (!installButton) {
+      return;
+    }
+
+    if (isStandaloneApp()) {
+      installButton.hidden = true;
+      setPwaStatus("App installata. I progetti salvati restano su questo dispositivo.");
+      return;
+    }
+
+    window.addEventListener("beforeinstallprompt", event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      installButton.hidden = false;
+      setPwaStatus("Puoi installarla come app: il calcolatore resta a portata di mano.");
+    });
+
+    installButton.addEventListener("click", async () => {
+      if (!deferredInstallPrompt) {
+        setPwaStatus("Se il browser supporta l'installazione, usa il menu del browser per aggiungere IsolaWatt alla schermata Home.");
+        return;
+      }
+
+      installButton.disabled = true;
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      installButton.disabled = false;
+      installButton.hidden = true;
+
+      setPwaStatus(choice.outcome === "accepted"
+        ? "Installazione avviata. I dati restano nel tuo browser."
+        : "Installazione annullata. Puoi continuare a usare IsolaWatt dal browser.");
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+      installButton.hidden = true;
+      setPwaStatus("App installata. Funziona anche offline dopo il primo caricamento.");
+    });
+  }
+
+  function isStandaloneApp() {
+    return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  }
+
+  function setPwaStatus(message) {
+    const status = document.getElementById("pwaStatus");
+    if (status) {
+      status.textContent = message;
+    }
   }
 
   const PRESETS = {
@@ -227,8 +317,12 @@
     comparisonNote: document.getElementById("comparisonNote"),
     batteryExplanation: document.getElementById("batteryExplanation"),
     pvExplanation: document.getElementById("pvExplanation"),
+    printReport: document.getElementById("printReport"),
+    toggleReportPreview: document.getElementById("toggleReportPreview"),
     copyReport: document.getElementById("copyReport"),
     printResults: document.getElementById("printResults"),
+    appSummaryBar: document.getElementById("appSummaryBar"),
+    appSummaryText: document.getElementById("appSummaryText"),
     saveProject: document.getElementById("saveProject"),
     loadProject: document.getElementById("loadProject"),
     clearProject: document.getElementById("clearProject"),
@@ -710,6 +804,7 @@
     dom.reportResults.textContent = "";
     dom.reportComparison.textContent = "";
     latestReportText = "";
+    updateMiniSummary(null);
     renderFeedback(result.error, true);
   }
 
@@ -737,7 +832,24 @@
     dom.comparisonNote.textContent = "A parità di consumi, AGM richiede più capacità nominale perché usa una profondità di scarica inferiore.";
     dom.batteryExplanation.textContent = `Uso ${formatWh(result.adjustedDailyWh)} al giorno per ${formatDecimal(settings.autonomyDays, 1)} giorni e DoD ${formatDecimal(settings.maxDepthOfDischarge * 100, 0)}%.`;
     dom.pvExplanation.textContent = `Divido il consumo con margine per ${formatDecimal(settings.peakSunHours, 1)} ore di sole e applico fattore perdite x${formatDecimal(settings.pvLossFactor, 2)}.`;
+    updateMiniSummary(result);
     pulseResults();
+  }
+
+  function updateMiniSummary(result) {
+    if (!dom.appSummaryBar || !dom.appSummaryText) {
+      return;
+    }
+
+    if (!result || result.error) {
+      dom.appSummaryBar.hidden = true;
+      document.body.classList.remove("has-mini-summary");
+      return;
+    }
+
+    dom.appSummaryText.textContent = `${formatWh(result.dailyWh)}/giorno · Batteria ${formatWh(result.batteryWh)} · FV ${formatWp(result.pvWp)} · MPPT ${formatNumber(result.controllerA)} A`;
+    dom.appSummaryBar.hidden = false;
+    document.body.classList.add("has-mini-summary");
   }
 
   function renderReport(result) {
@@ -991,14 +1103,15 @@
 
   // presets
   function applyPreset(key) {
-    const preset = PRESETS[key];
+    const normalizedKey = normalizePresetKey(key);
+    const preset = PRESETS[normalizedKey];
     if (!preset) {
       return;
     }
 
     state = {
       ...state,
-      preset: key,
+      preset: normalizedKey,
       useCase: preset.useCase,
       systemVoltage: preset.systemVoltage,
       autonomyDays: preset.autonomyDays,
@@ -1016,6 +1129,14 @@
     };
     render();
     renderFeedback(`Preset "${preset.label}" applicato. Puoi modificare carichi e parametri.`, false);
+  }
+
+  function normalizePresetKey(key) {
+    if (PRESETS[key]) {
+      return key;
+    }
+
+    return PRESET_ALIASES[key] || key;
   }
 
   // local storage
@@ -1227,6 +1348,20 @@
     await copyText(latestReportText, "Report copiato negli appunti.");
   }
 
+  function toggleReportPreview() {
+    if (!dom.printReport || !dom.toggleReportPreview) {
+      return;
+    }
+
+    const isOpen = dom.printReport.classList.toggle("is-open");
+    dom.toggleReportPreview.setAttribute("aria-expanded", String(isOpen));
+    dom.toggleReportPreview.textContent = isOpen ? "Nascondi anteprima" : "Anteprima report";
+
+    if (isOpen) {
+      dom.printReport.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
   async function copyText(text, successMessage) {
     let copied = false;
 
@@ -1352,37 +1487,78 @@
     dom.clearProject.addEventListener("click", clearSavedProject);
     dom.copyProjectLink.addEventListener("click", copyProjectLink);
     dom.copyReport.addEventListener("click", copyReport);
+    if (dom.toggleReportPreview) {
+      dom.toggleReportPreview.addEventListener("click", toggleReportPreview);
+    }
     dom.printResults.addEventListener("click", () => window.print());
+
+    window.addEventListener("hashchange", () => {
+      handleHashRoute(false);
+    });
   }
 
   // init
   function init() {
-    const hash = window.location.hash.replace(/^#/, "");
-    const presetKey = new URLSearchParams(hash).get("preset");
-
-    if (presetKey && PRESETS[presetKey]) {
-      applyPreset(presetKey);
-      const calc = document.getElementById("calcolatore");
-      if (calc) {
-        calc.setAttribute("tabindex", "-1");
-        setTimeout(() => {
-          calc.scrollIntoView({ behavior: "smooth", block: "start" });
-          calc.focus({ preventScroll: true });
-          showPresetArrival(presetKey);
-        }, 100);
-      }
-    } else if (presetKey) {
-      render();
-    } else {
-      const sharedProject = parseShareHash();
-      if (sharedProject) {
-        applySnapshot(sharedProject);
-        renderFeedback("Scenario caricato dal link condivisibile.", false);
-      } else {
-        render();
-      }
+    if (handleHashRoute(true)) {
+      finishInit();
+      return;
     }
 
+    const sharedProject = parseShareHash();
+    if (sharedProject) {
+      applySnapshot(sharedProject);
+      renderFeedback("Scenario caricato dal link condivisibile.", false);
+    } else {
+      render();
+    }
+
+    finishInit();
+  }
+
+  function handleHashRoute(shouldScroll) {
+    const hash = window.location.hash.replace(/^#/, "");
+    const presetKey = new URLSearchParams(hash).get("preset");
+    const normalizedPresetKey = normalizePresetKey(presetKey);
+
+    if (presetKey && PRESETS[normalizedPresetKey]) {
+      applyPreset(normalizedPresetKey);
+      if (shouldScroll) {
+        focusCalculatorFromPreset(normalizedPresetKey);
+      } else {
+        showPresetArrival(normalizedPresetKey);
+      }
+      return true;
+    }
+
+    if (presetKey) {
+      return false;
+    }
+
+    const sharedProject = parseShareHash();
+    if (sharedProject) {
+      applySnapshot(sharedProject);
+      renderFeedback("Scenario caricato dal link condivisibile.", false);
+      return true;
+    }
+
+    return false;
+  }
+
+  function focusCalculatorFromPreset(presetKey) {
+    const calc = document.getElementById("calcolatore");
+    if (!calc) {
+      return;
+    }
+
+    calc.setAttribute("tabindex", "-1");
+    setTimeout(() => {
+      calc.scrollIntoView({ behavior: "smooth", block: "start" });
+      calc.focus({ preventScroll: true });
+      showPresetArrival(presetKey);
+    }, 100);
+  }
+
+  function finishInit() {
     if (!storageAvailable()) {
       dom.saveProject.disabled = true;
       dom.loadProject.disabled = true;

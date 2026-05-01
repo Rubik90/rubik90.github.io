@@ -1,0 +1,53 @@
+{
+  "name": "IsolaWatt Solar Sizer",
+  "short_name": "IsolaWatt",
+  "description": "Calcolatore statico per dimensionare consumi, batteria, pannelli, inverter e MPPT per impianti solari off-grid.",
+  "lang": "it",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fbfbf7",
+  "theme_color": "#087f73",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    {
+      "src": "/assets/isolawatt-logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/isolawatt-logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Apri calcolatore",
+      "short_name": "Calcolatore",
+      "url": "/#calcolatore",
+      "description": "Apri il calcolatore fotovoltaico off-grid."
+    },
+    {
+      "name": "Camper con frigo",
+      "short_name": "Camper",
+      "url": "/#preset=camper-frigo",
+      "description": "Apri IsolaWatt con preset camper."
+    },
+    {
+      "name": "Barca in rada",
+      "short_name": "Barca",
+      "url": "/#preset=barca-rada",
+      "description": "Apri IsolaWatt con preset barca."
+    },
+    {
+      "name": "Baita weekend",
+      "short_name": "Baita",
+      "url": "/#preset=baita-weekend",
+      "description": "Apri IsolaWatt con preset baita."
+    }
+  ]
+}

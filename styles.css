@@ -367,9 +367,45 @@ h3 {
   color: var(--muted);
 }
 
+.pwa-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  margin: 16px 0;
+  padding: 14px;
+  border: 1px solid rgba(8, 127, 115, 0.22);
+  border-radius: 8px;
+  background: var(--teal-bg);
+}
+
+.pwa-card strong {
+  display: block;
+  line-height: 1.2;
+}
+
+.pwa-card p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.app-badge {
+  display: inline-grid;
+  min-width: 44px;
+  min-height: 32px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--deep-teal);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
 .calculator-section,
 .content-band,
 .use-cases,
+.guides-section,
 .checklist-section,
 .faq-section {
   border-top: 1px solid var(--line);
@@ -990,8 +1026,13 @@ h3 {
 }
 
 .print-report {
+  display: none;
   margin-top: 22px;
   padding: clamp(18px, 3vw, 28px);
+}
+
+.print-report.is-open {
+  display: block;
 }
 
 .report-header {
@@ -1024,6 +1065,10 @@ h3 {
 .report-table {
   margin-top: 10px;
   font-size: 0.94rem;
+}
+
+.app-summary-bar {
+  display: none;
 }
 
 .site-footer {
@@ -1125,6 +1170,10 @@ body[data-mode="simple"] .advanced-only {
 }
 
 @media (max-width: 760px) {
+  body.has-mini-summary {
+    padding-bottom: 82px;
+  }
+
   .site-header {
     flex-wrap: wrap;
     padding: 14px 0;
@@ -1216,6 +1265,29 @@ body[data-mode="simple"] .advanced-only {
     width: 100%;
   }
 
+  .hero {
+    gap: 16px;
+    padding-top: 14px;
+    padding-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 11vw, 3.2rem);
+    line-height: 1;
+  }
+
+  .lead {
+    margin-top: 12px;
+  }
+
+  .actions {
+    margin-top: 18px;
+  }
+
+  .calculator-section {
+    padding-top: 30px;
+  }
+
   .mode-panel,
   .project-panel,
   .report-actions-panel,
@@ -1236,6 +1308,37 @@ body[data-mode="simple"] .advanced-only {
   .step-panel {
     padding-left: 16px;
     padding-top: 54px;
+  }
+
+  .app-summary-bar:not([hidden]) {
+    position: fixed;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    left: 12px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid rgba(8, 127, 115, 0.28);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 10px 30px rgba(22, 33, 31, 0.16);
+    backdrop-filter: blur(10px);
+  }
+
+  .app-summary-bar span {
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .app-summary-bar .text-button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0 8px;
   }
 }
 
@@ -1375,6 +1478,7 @@ body[data-mode="simple"] .advanced-only {
 
   .site-header,
   .hero,
+  .app-summary-bar,
   .calculator-form,
   .results-shell,
   .content-band,
