@@ -1,6 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/progetti", "destination": "/projects", "permanent": true },
+    { "source": "/foto", "destination": "/photos", "permanent": true }
+  ],
   "headers": [
     { "source": "/img/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
   ]
