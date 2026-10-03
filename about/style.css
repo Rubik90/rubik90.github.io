@@ -48,6 +48,8 @@ a.chip:hover { border-color:#9cace9; background:#f8faff; }
 .when { display:block; font-size:.8125rem; font-weight:600; color:var(--blue); letter-spacing:.02em; }
 .what { display:block; font-weight:650; font-size:1rem; margin-top:2px; }
 .where { display:block; color:var(--muted); font-size:.9375rem; }
+.detail { display:block; margin-top:6px; color:#56637c; font-size:.875rem; line-height:1.6; }
+h2.sub { margin-top:36px; }
 
 /* Cards (Progetti) */
 .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
