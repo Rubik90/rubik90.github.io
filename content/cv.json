@@ -6,7 +6,6 @@
   "name": "Antonio Giordano",
   "website": "https://antgio90.it",
   "contact": {
-    "address": "",
     "city": "Napoli (NA)",
     "phone": "(+39) 379 2728 434",
     "email": "antgio90@outlook.it"
@@ -20,15 +19,14 @@
       "bullets": [
         "5+ years of Functional Safety experience in automotive, working according to ISO 26262 and aligned with ASPICE / OEM requirements via SS 7740 (requirements mapping and process tailoring).",
         "Execute SW unit design and unit testing; perform peer reviews and code inspections on safety-critical modules (MISRA, static analysis findings), producing verification reports and evidence for the Safety Case.",
-        "Design requirement-based test cases and automate their execution with ECU-TEST on HIL benches (functional validation of ECU signals), with results traced back to requirements.",
+        "Design requirement-based test cases and automate their execution with ECU-TEST.",
         "Instrument and analyze timing/real-time behavior of safety mechanisms and safety-relevant execution paths.",
         "SW engineering on safety-relevant components: author SW integration requirements and contribute to SW architecture; maintain SW architecture documentation and SW requirements (SEooC, MICROSAR Safe, MCAL).",
         "Develop and maintain key FuSa work products: DIA, Safety Plans, Safety Case and GSN argumentation, confirmation measures, and compliance checklists.",
         "Plan, coordinate, and monitor FuSa activities and deliverables; mentor and support the project FuSa team.",
         "Lead and support FuSa/ASPICE/OEM audits and assessments; primary contact for safety and process topics with customers and suppliers.",
         "Apply GenAI to FuSa support workflows (human-in-the-loop): RAG/agents to accelerate compliance and analysis tasks."
-      ],
-      "lines": []
+      ]
     },
     {
       "org": "Kineton",
@@ -39,8 +37,7 @@
         "C/C++",
         "Build systems and debug tools",
         "Integration Requirements"
-      ],
-      "lines": []
+      ]
     }
   ],
   "education": [
@@ -52,15 +49,13 @@
       "bullets": [
         "Azure, GitHub, Python, Keras, TensorFlow, OpenFace. ML application development: Emotion Recognition",
         "Final mark: Sobresaliente (10/10)"
-      ],
-      "lines": []
+      ]
     },
     {
       "org": "University of Naples Federico II",
       "place": "Naples",
       "role": "Master’s Degree in Computer Engineering",
       "period": "SEP 2015 - MAR 2021",
-      "bullets": [],
       "lines": [
         "“Multimodal analysis of emotions in multimedia”",
         "Goal: ER application developed on Azure/Colab platforms",
@@ -72,7 +67,6 @@
       "place": "Naples",
       "role": "Bachelor’s Degree in Computer Engineering",
       "period": "SEP 2009 - JAN 2015",
-      "bullets": [],
       "lines": [
         "“NoSQL technologies: Sesame”",
         "Goal: Sesame Database Manager implementation focus",
@@ -85,9 +79,7 @@
       "org": "Freebacoli",
       "place": "Bacoli",
       "role": "Volunteer",
-      "period": "SEP 2010 - MAY 2015",
-      "bullets": [],
-      "lines": []
+      "period": "SEP 2010 - MAY 2015"
     }
   ],
   "skills": [
