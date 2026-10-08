@@ -86,96 +86,80 @@ content:
           - { name: title, label: Titolo documento, type: string }
           - { name: subject, label: Oggetto, type: string }
       - { name: name, label: Nome e cognome, type: string, required: true }
-      - name: headline
-        label: Titoli sotto il nome
-        type: string
-        list: true
+      - { name: website, label: Sito web (sotto il nome), type: string }
       - name: contact
-        label: Contatti
+        label: Contatti (colonna destra)
         type: object
         fields:
-          - { name: location, label: Località, type: string }
-          - { name: email, label: Email, type: string, required: true }
+          - { name: address, label: "Indirizzo (vuoto = non pubblicato)", type: string }
+          - { name: city, label: CAP / città, type: string }
           - { name: phone, label: Telefono (vuoto = nascosto), type: string }
-          - { name: linkedin, label: LinkedIn URL, type: string }
-          - { name: website, label: Sito web URL, type: string }
-          - { name: language_note, label: Nota lingua (intestazione), type: string }
-          - { name: language_url, label: Link certificato lingua, type: string }
-      - name: summary
-        label: Professional summary
-        type: text
-        required: true
-        description: "Formattazione: **grassetto**, *corsivo*, [testo](https://link)"
-      - name: certifications
-        label: Certificazioni (colonna sinistra)
-        type: string
-        list: true
-        description: "Es. **TÜV SÜD Certified:** ISO 26262:2018 (Level 1)"
-      - name: languages
-        label: Lingue (colonna destra)
-        type: string
-        list: true
+          - { name: email, label: Email, type: string, required: true }
       - name: experience
-        label: Esperienza
+        label: Experience
         type: object
         list:
           collapsible:
             collapsed: true
             summary: "{period} · {role}"
-        fields:
-          - { name: role, label: Ruolo, type: string, required: true }
-          - { name: company, label: Azienda, type: string }
-          - { name: period, label: Periodo, type: string }
-          - { name: location, label: Luogo, type: string }
-          - { name: summary, label: Sintesi (corsivo), type: text }
+        fields: &cv_entry
+          - { name: org, label: "Azienda / istituto (grassetto)", type: string, required: true }
+          - { name: place, label: Città, type: string }
+          - { name: role, label: "Ruolo / titolo (corsivo)", type: string }
+          - { name: period, label: "Periodo (es. JUN 2021 - JUL 2026)", type: string }
           - name: bullets
             label: Punti elenco
             type: text
             list: true
-            description: "Es. **Titolo:** descrizione"
-      - name: competencies
-        label: Competenze tecniche (griglia 2 colonne)
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{title}"
-        fields:
-          - { name: title, label: Titolo, type: string, required: true }
-          - { name: text, label: Testo, type: text }
-      - name: highlights
-        label: Highlights
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{title}"
-        fields:
-          - { name: title, label: Titolo, type: string, required: true }
-          - { name: text, label: Testo, type: text }
+            description: "Formattazione: **grassetto**, *corsivo*, [testo](https://link)"
+          - name: lines
+            label: Righe semplici (senza pallino)
+            type: string
+            list: true
       - name: education
-        label: Formazione
+        label: Education
         type: object
         list:
           collapsible:
             collapsed: true
-            summary: "{period} · {degree}"
-        fields:
-          - { name: degree, label: Titolo di studio, type: string, required: true }
-          - { name: institution, label: Istituto, type: string }
-          - { name: period, label: Periodo, type: string }
-          - { name: location, label: Luogo, type: string }
-          - { name: details, label: Dettagli, type: text, description: "Es. **Final Grade:** 107 / 110 • **Thesis:** …" }
-      - name: honors
-        label: Riconoscimenti e altre esperienze
-        type: text
+            summary: "{period} · {role}"
+        fields: *cv_entry
+      - name: volunteering
+        label: Volunteering
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{period} · {org}"
+        fields: *cv_entry
+      - name: skills
+        label: Skills (separate da "|")
+        type: string
         list: true
-      - { name: privacy, label: Clausola privacy (GDPR), type: text }
-      - name: layout
-        label: Impaginazione
+      - name: awards
+        label: Awards
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Titolo (grassetto), type: string, required: true }
+          - { name: period, label: Periodo, type: string }
+      - name: languages
+        label: Languages
+        type: object
+        list: true
+        fields:
+          - { name: label, label: "Lingua e livello (es. English C1)", type: string, required: true }
+          - { name: url, label: Link certificato, type: string }
+      - name: certifications
+        label: Certificazioni
         type: object
         fields:
-          - { name: competencies_new_page, label: "Competenze tecniche su nuova pagina", type: boolean }
+          - { name: title, label: Titolo sezione, type: string }
+          - name: items
+            label: Voci
+            type: string
+            list: true
+      - { name: declaration, label: Declaration (GDPR), type: text }
 
   # ───────────────────────── about.antgio90.it ─────────────────────────
   - name: about_site

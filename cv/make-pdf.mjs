@@ -19,8 +19,10 @@ const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePa
 try {
   const page = await browser.newPage();
   await page.goto(pathToFileURL(htmlPath).href, { waitUntil: 'load' });
-  await page.evaluate(() => document.fonts.ready);
-  const missing = await page.evaluate(() => [...document.fonts].filter(f => f.status !== 'loaded').map(f => f.weight + ' ' + f.style));
+  const missing = await page.evaluate(async () => {
+    await Promise.allSettled([...document.fonts].map(f => f.load()));
+    return [...document.fonts].filter(f => f.status !== 'loaded').map(f => f.weight + ' ' + f.style);
+  });
   if (missing.length) throw new Error('Font non caricati: ' + missing.join(', '));
   const pdf = await page.pdf({ format: 'A4', preferCSSPageSize: true, printBackground: true, tagged: true, outline: true });
   writeFileSync(OUT_PDF, pdf);

@@ -1,134 +1,125 @@
 {
   "pdf": {
     "title": "Antonio Giordano - Curriculum Vitae",
-    "subject": "Functional & System Safety Engineer CV"
+    "subject": "Functional Safety Engineer CV"
   },
   "name": "Antonio Giordano",
-  "headline": [
-    "Functional & System Safety Engineer",
-    "Computer Engineer"
-  ],
+  "website": "https://antgio90.it",
   "contact": {
-    "location": "Naples, Italy (Open to relocation)",
-    "email": "antgio90@outlook.it",
-    "phone": "+39 379 2728 434",
-    "linkedin": "https://www.linkedin.com/in/antgio90/",
-    "website": "https://antgio90.it",
-    "language_note": "English: C1 Advanced • EF SET",
-    "language_url": "https://cert.efset.org/en/wE9RZA"
+    "address": "",
+    "city": "Napoli (NA)",
+    "phone": "(+39) 379 2728 434",
+    "email": "antgio90@outlook.it"
   },
-  "summary": "Computer Engineer with over 5 years of Functional and System Safety experience across defence and automotive programmes. Hands-on system safety engineering per **MIL-STD-882E**: Preliminary Hazard Lists (PHL), PHA, SRHA, SSHA and HAZOP, risk assessment with the severity/probability matrix, derivation of safety requirements and hazard tracking to closure. Complementary safety lifecycle management per **ISO 26262:2018** and **IEC 61508**: Safety Cases with Goal Structuring Notation (GSN), Safety Plans, DIAs and full requirements traceability aligned with ASPICE and OEM standards (SS 7740). Proven track record in qualitative and quantitative safety analyses (FMEA, FTA), safety-critical embedded software verification (MISRA, timing analysis, unit testing) on complex ECUs (OBC, SEooC, MICROSAR Safe), and representing safety teams during customer and OEM audits. Pioneer in applying human-in-the-loop Generative AI (RAG and LLM agents) to streamline safety compliance and analysis workflows.",
-  "certifications": [
-    "**TÜV SÜD Certified:** ISO 26262:2018 (Level 1)",
-    "**TÜV SÜD Certified:** IEC EN 61508:2010 (Level 1)"
-  ],
-  "languages": [
-    "English: C1 Advanced — EF SET ([Score Verification](https://cert.efset.org/en/wE9RZA))",
-    "Italian: Native proficiency"
-  ],
   "experience": [
     {
+      "org": "Kineton",
+      "place": "Naples",
       "role": "Functional Safety Engineer",
-      "company": "Kineton",
-      "period": "2021 – 2026",
-      "location": "Naples, Italy",
-      "summary": "Led defence system safety per MIL-STD-882E and automotive Functional Safety per ISO 26262, managing work products, embedded software verification and process compliance aligned with ASPICE and OEM requirements via SS 7740.",
+      "period": "JUN 2021 - JUL 2026",
       "bullets": [
-        "**Defence System Safety (MIL-STD-882E):** Prepared Preliminary Hazard Lists (PHL) and executed PHA, SRHA, SSHA and HAZOP for defence safety scopes; assessed risk with the MIL-STD-882E severity/probability matrix, derived safety requirements and tracked hazard mitigations to closure.",
-        "**Automotive Safety Analyses:** Performed software FMEA and FTA on an On-Board Charger (OBC) control system board using specialized safety software.",
-        "**Safety Lifecycle & Team Coordination:** Formulated, coordinated and monitored comprehensive safety plans, milestones and deliverables; mentored and guided project safety engineering team members across multi-disciplinary functions.",
-        "**Safety Cases & Documentation:** Authored, structured and maintained core safety artifacts including Safety Cases with Goal Structuring Notation (GSN) arguments, Safety Plans, Development Interface Agreements (DIA), confirmation measures and ISO 26262 compliance checklists.",
-        "**Embedded SW Verification & Architecture:** Defined software architecture and integration requirements for safety-relevant components (SEooC, MICROSAR Safe, MCAL); conducted SW unit design, unit testing and peer reviews, addressing MISRA compliance and static analysis findings.",
-        "**Timing & Real-Time Behavior:** Instrumented and analyzed timing, execution latency and runtime behavior of safety mechanisms and safety-critical execution paths to validate deterministic performance.",
-        "**Audits & Assessment Leadership:** Served as primary technical contact for safety and process topics with customers and Tier-1 suppliers; successfully prepared and led teams through FuSa, ASPICE and OEM assessments and audits.",
-        "**Generative AI Innovation:** Pioneered human-in-the-loop Generative AI workflows (RAG pipelines and autonomous agents) to automate compliance verification, evidence synthesis and traceability checking, significantly accelerating documentation cycles."
-      ]
+        "5+ years of Functional Safety experience in automotive, working according to ISO 26262 and aligned with ASPICE / OEM requirements via SS 7740 (requirements mapping and process tailoring).",
+        "Execute SW unit design and unit testing; perform peer reviews and code inspections on safety-critical modules (MISRA, static analysis findings), producing verification reports and evidence for the Safety Case.",
+        "Design requirement-based test cases and automate their execution with ECU-TEST on HIL benches (functional validation of ECU signals), with results traced back to requirements.",
+        "Instrument and analyze timing/real-time behavior of safety mechanisms and safety-relevant execution paths.",
+        "SW engineering on safety-relevant components: author SW integration requirements and contribute to SW architecture; maintain SW architecture documentation and SW requirements (SEooC, MICROSAR Safe, MCAL).",
+        "Develop and maintain key FuSa work products: DIA, Safety Plans, Safety Case and GSN argumentation, confirmation measures, and compliance checklists.",
+        "Plan, coordinate, and monitor FuSa activities and deliverables; mentor and support the project FuSa team.",
+        "Lead and support FuSa/ASPICE/OEM audits and assessments; primary contact for safety and process topics with customers and suppliers.",
+        "Apply GenAI to FuSa support workflows (human-in-the-loop): RAG/agents to accelerate compliance and analysis tasks."
+      ],
+      "lines": []
     },
     {
-      "role": "Automotive Software Intern",
-      "company": "Kineton",
-      "period": "2021",
-      "location": "Naples, Italy",
-      "summary": "",
+      "org": "Kineton",
+      "place": "Naples",
+      "role": "Automotive Internship",
+      "period": "MAR 2021 - JUN 2021",
       "bullets": [
-        "**Embedded C/C++ Development:** Developed firmware modules, build systems and debugging tooling for automotive control units.",
-        "**Integration Requirements:** Analyzed and managed system/software integration requirements to ensure baseline consistency."
-      ]
-    }
-  ],
-  "competencies": [
-    {
-      "title": "Safety Standards & Governance",
-      "text": "MIL-STD-882E (System Safety), ISO 26262:2018 (Functional Safety), IEC 61508, Automotive SPICE (ASPICE), SS 7740:2023 (OEM process tailoring), Requirements Traceability, DIA, Safety Plans, Safety Cases (GSN), Confirmation Measures, Audits & Assessments."
-    },
-    {
-      "title": "Safety & Hazard Analyses",
-      "text": "MIL-STD-882E: Preliminary Hazard List (PHL), Preliminary Hazard Analysis (PHA), System Requirements Hazard Analysis (SRHA), Subsystem Hazard Analysis (SSHA); HAZOP; Risk Assessment Matrix & Hazard Tracking; Software FMEA & FTA (e.g., On-Board Charger ECU control board); Risk Reduction Strategies."
-    },
-    {
-      "title": "Embedded Software & Verification",
-      "text": "C/C++, Python, SW Unit Design & Unit Testing, Peer Code Reviews, Code Inspections, MISRA C/C++ Compliance, Static Analysis Remediation, Real-Time Execution Path Profiling, Timing Analysis, SW Architecture & Integration Requirements."
-    },
-    {
-      "title": "Automotive Components & Tooling",
-      "text": "Safety Elements out of Context (SEooC), Vector MICROSAR Safe, Microcontroller Abstraction Layer (MCAL), Build Systems, Debugging Tooling, Git/GitHub, Online Safety Analysis Tools."
-    },
-    {
-      "title": "AI, Automation & Emerging Tech",
-      "text": "Generative AI applied to safety workflows (human-in-the-loop), RAG (Retrieval-Augmented Generation), Autonomous Compliance Agents, Microsoft Azure, Google Colab, Keras, TensorFlow, OpenFace."
-    },
-    {
-      "title": "Key Methodologies & Soft Skills",
-      "text": "Safety Planning & Coordination, Cross-Functional Team Mentorship, Customer & Supplier Technical Liaison, Technical Safety Documentation, Audit Presentation & Defense, Rigorous Engineering Traceability."
-    }
-  ],
-  "highlights": [
-    {
-      "title": "Defence System Safety (MIL-STD-882E):",
-      "text": "Formulated Preliminary Hazard Lists (PHL) and carried out PHA, SRHA, SSHA and HAZOP for mission-critical defence systems, with severity/probability risk assessment and hazard tracking to closure."
-    },
-    {
-      "title": "On-Board Charger (OBC) Control ECU:",
-      "text": "Executed exhaustive software FMEA and FTA on an OBC control board, mapping safety mechanisms to diagnostic requirements and hardware fault metrics."
-    },
-    {
-      "title": "Embedded Architecture & SEooC:",
-      "text": "Integrated Safety Elements out of Context (SEooC) within AUTOSAR / Vector MICROSAR Safe and configured MCAL hardware abstraction layers."
-    },
-    {
-      "title": "GenAI in Safety Compliance:",
-      "text": "Designed human-in-the-loop RAG and agent architectures to accelerate safety standard cross-referencing, evidence gathering and checklist verification."
+        "C/C++",
+        "Build systems and debug tools",
+        "Integration Requirements"
+      ],
+      "lines": []
     }
   ],
   "education": [
     {
-      "degree": "Master’s Degree in Computer Engineering",
-      "institution": "University of Naples Federico II",
-      "period": "2015 – 2021",
-      "location": "Naples, Italy",
-      "details": "**Final Grade:** 107 / 110 • **Thesis:** Multimodal Analysis of Emotions in Multimedia. • **Implementation:** Designed and deployed an end-to-end Emotion Recognition machine learning application leveraging Microsoft Azure and Google Colab cloud platforms."
+      "org": "Universidad Politécnica de Madrid - ETSISI",
+      "place": "Madrid",
+      "role": "Erasmus+ Trainee",
+      "period": "SEP 2020 - FEB 2021",
+      "bullets": [
+        "Azure, GitHub, Python, Keras, TensorFlow, OpenFace. ML application development: Emotion Recognition",
+        "Final mark: Sobresaliente (10/10)"
+      ],
+      "lines": []
     },
     {
-      "degree": "Erasmus+ Traineeship — Machine Learning & Computer Vision",
-      "institution": "Universidad Politécnica de Madrid (ETSISI)",
-      "period": "2020 – 2021",
-      "location": "Madrid, Spain",
-      "details": "**Final Grade:** Sobresaliente (10 / 10 with distinction) • **Applied R&D:** Developed a high-precision computer vision pipeline for facial emotion recognition utilizing Python, Keras, TensorFlow, OpenFace, Azure and Git."
+      "org": "University of Naples Federico II",
+      "place": "Naples",
+      "role": "Master’s Degree in Computer Engineering",
+      "period": "SEP 2015 - MAR 2021",
+      "bullets": [],
+      "lines": [
+        "“Multimodal analysis of emotions in multimedia”",
+        "Goal: ER application developed on Azure/Colab platforms",
+        "Final mark: 107/110"
+      ]
     },
     {
-      "degree": "Bachelor’s Degree in Computer Engineering",
-      "institution": "University of Naples Federico II",
-      "period": "2009 – 2015",
-      "location": "Naples, Italy",
-      "details": "**Final Grade:** 96 / 110 • **Thesis:** NoSQL Technologies: Sesame. • **Implementation:** Conducted comparative analysis of graph database architectures with practical focus on the Sesame RDF database manager implementation."
+      "org": "University of Naples Federico II",
+      "place": "Naples",
+      "role": "Bachelor’s Degree in Computer Engineering",
+      "period": "SEP 2009 - JAN 2015",
+      "bullets": [],
+      "lines": [
+        "“NoSQL technologies: Sesame”",
+        "Goal: Sesame Database Manager implementation focus",
+        "Final mark: 96/110"
+      ]
     }
   ],
-  "honors": [
-    "**Academic Merit Scholarship Recipient (2009 – 2012):** Awarded competitive university scholarship by University of Naples Federico II based on sustained academic standing and merit.",
-    "**Community Volunteer — Freebacoli (2010 – 2015):** Actively contributed to local non-profit community engagement, youth mentorship and civic transparency initiatives in Bacoli (Naples)."
+  "volunteering": [
+    {
+      "org": "Freebacoli",
+      "place": "Bacoli",
+      "role": "Volunteer",
+      "period": "SEP 2010 - MAY 2015",
+      "bullets": [],
+      "lines": []
+    }
   ],
-  "privacy": "In compliance with the Italian Legislative Decree no. 196 dated 30/06/2003 and the EU GDPR 2016/679, I hereby authorize the processing of my personal data for recruitment and selection purposes.",
-  "layout": {
-    "competencies_new_page": true
-  }
+  "skills": [
+    "ISO 26262:2018",
+    "ASPICE",
+    "SS 7740:2023",
+    "Traceability",
+    "ECU-TEST",
+    "IEC 61508",
+    "Python",
+    "C/C++",
+    "Team working",
+    "Plan & Organize"
+  ],
+  "awards": [
+    {
+      "title": "Scholarship Winner",
+      "period": "2009-2012"
+    }
+  ],
+  "languages": [
+    {
+      "label": "English C1",
+      "url": "https://cert.efset.org/en/wE9RZA"
+    }
+  ],
+  "certifications": {
+    "title": "TÜV SÜD Certification",
+    "items": [
+      "ISO 26262:2018 (L1)",
+      "IEC EN 61508:2010 (L1)"
+    ]
+  },
+  "declaration": "GDPR consent for personal data processing (EU 2016/679)."
 }

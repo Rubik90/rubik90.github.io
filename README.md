@@ -7,7 +7,7 @@ content/profile.json        → antgio90.it (testi e link)
 content/cv.json             → CV (il PDF viene generato da qui)
 public/                     → file statici copiati così come sono (styles.css, CV PDF generato)
 build.mjs                   → genera dist/ per antgio90.it
-cv/                         → template HTML del CV + script PDF (Playwright/Chromium) + font Open Sans
+cv/                         → template HTML del CV + script PDF (Playwright/Chromium) + font Arimo (metrica Arial, OFL)
 .github/workflows/cv-pdf.yml→ GitHub Action che rigenera il PDF quando cambia il CV
 
 about/content/site.json     → email, Instagram, footer (comuni alle 3 pagine)
