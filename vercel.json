@@ -1,7 +1,17 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node build.mjs",
+  "outputDirectory": "dist",
   "redirects": [
-    { "source": "/about", "destination": "https://about.antgio90.it/", "permanent": true },
-    { "source": "/about/:path*", "destination": "https://about.antgio90.it/:path*", "permanent": true }
+    {
+      "source": "/about",
+      "destination": "https://about.antgio90.it/",
+      "permanent": true
+    },
+    {
+      "source": "/about/:path*",
+      "destination": "https://about.antgio90.it/:path*",
+      "permanent": true
+    }
   ]
 }

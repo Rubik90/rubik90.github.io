@@ -1,11 +1,29 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node build.mjs",
+  "outputDirectory": "dist",
   "cleanUrls": true,
   "redirects": [
-    { "source": "/progetti", "destination": "/projects", "permanent": true },
-    { "source": "/foto", "destination": "/photos", "permanent": true }
+    {
+      "source": "/progetti",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/foto",
+      "destination": "/photos",
+      "permanent": true
+    }
   ],
   "headers": [
-    { "source": "/img/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
+    {
+      "source": "/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    }
   ]
 }

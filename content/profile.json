@@ -1,0 +1,62 @@
+{
+  "seo": {
+    "title": "Antonio Giordano · Functional Safety Engineer",
+    "description": "Antonio Giordano, Functional Safety Engineer based in Naples. Explore my experience, read my CV and get in touch."
+  },
+  "location": "Naples, Italy",
+  "eyebrow": "FUNCTIONAL SAFETY ENGINEER",
+  "first_name": "Antonio",
+  "last_name": "Giordano",
+  "bio": "5+ years of experience in automotive and defence. Safety analysis, requirements, safety cases and software verification.",
+  "expertise": ["ISO 26262", "IEC 61508", "MIL-STD-882E", "ASPICE"],
+  "certification": {
+    "title": "TÜV SÜD · Level 1",
+    "detail": "ISO 26262:2018 & IEC EN 61508:2010"
+  },
+  "links": [
+    {
+      "label": "Curriculum vitae",
+      "description": "Experience, skills & education",
+      "url": "Antonio-Giordano-CV.pdf",
+      "icon": "document",
+      "badge": "PDF",
+      "highlight": true
+    },
+    {
+      "label": "LinkedIn",
+      "description": "My professional profile",
+      "url": "https://www.linkedin.com/in/antgio90/",
+      "icon": "linkedin",
+      "badge": "",
+      "highlight": false
+    },
+    {
+      "label": "Get in touch",
+      "description": "antgio90@outlook.it",
+      "url": "mailto:antgio90@outlook.it",
+      "icon": "email",
+      "badge": "",
+      "highlight": false
+    },
+    {
+      "label": "Personal website",
+      "description": "A little more about me",
+      "url": "https://about.antgio90.it",
+      "icon": "globe",
+      "badge": "",
+      "highlight": false
+    },
+    {
+      "label": "English · C1",
+      "description": "View my EF SET certificate",
+      "url": "https://cert.efset.org/en/wE9RZA",
+      "icon": "badge",
+      "badge": "",
+      "highlight": false
+    }
+  ],
+  "footer": {
+    "left": "Antonio Giordano",
+    "right": "Functional Safety · Systems & Software"
+  }
+}

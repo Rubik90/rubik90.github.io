@@ -1,0 +1,227 @@
+# Pages CMS — https://app.pagescms.org
+# Ogni salvataggio = un commit su GitHub → Vercel ricostruisce il sito (≈10 s).
+
+media:
+  - name: about_images
+    label: Foto (about.antgio90.it)
+    input: about/public/img
+    output: /img
+    categories: [image]
+    rename: safe
+  - name: files
+    label: File (antgio90.it · CV)
+    input: public
+    output: /
+    categories: [document]
+
+content:
+  # ───────────────────────── antgio90.it ─────────────────────────
+  - name: profile
+    label: "antgio90.it · Profilo"
+    type: file
+    path: content/profile.json
+    format: json
+    fields:
+      - name: seo
+        label: SEO
+        type: object
+        fields:
+          - { name: title, label: Titolo pagina (tab browser), type: string, required: true }
+          - { name: description, label: Meta description (Google), type: text, required: true }
+      - { name: location, label: Località, type: string }
+      - { name: eyebrow, label: Ruolo (sopra il nome), type: string }
+      - { name: first_name, label: Nome, type: string, required: true }
+      - { name: last_name, label: Cognome, type: string, required: true }
+      - { name: bio, label: Bio, type: text, required: true }
+      - name: expertise
+        label: Standard / competenze
+        type: string
+        list: true
+      - name: certification
+        label: Certificazione
+        type: object
+        fields:
+          - { name: title, label: Titolo, type: string }
+          - { name: detail, label: Dettaglio, type: string }
+      - name: links
+        label: Link (card)
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - { name: label, label: Titolo, type: string, required: true }
+          - { name: description, label: Sottotitolo, type: string }
+          - name: url
+            label: URL
+            type: string
+            required: true
+            description: "https://…, mailto:… oppure un file in /public (es. Antonio-Giordano-CV.pdf)"
+          - name: icon
+            label: Icona
+            type: select
+            options:
+              values:
+                - { name: document, label: Documento }
+                - { name: linkedin, label: LinkedIn }
+                - { name: email, label: Email }
+                - { name: globe, label: Sito web }
+                - { name: badge, label: Certificato }
+                - { name: link, label: Link generico }
+          - { name: badge, label: Etichetta a destra (es. PDF), type: string }
+          - { name: highlight, label: Card in evidenza (blu), type: boolean }
+      - name: footer
+        label: Footer
+        type: object
+        fields:
+          - { name: left, label: Sinistra, type: string }
+          - { name: right, label: Destra, type: string }
+
+  # ───────────────────────── about.antgio90.it ─────────────────────────
+  - name: about_site
+    label: "about · Impostazioni comuni"
+    type: file
+    path: about/content/site.json
+    format: json
+    fields:
+      - { name: email, label: Email, type: string, required: true }
+      - { name: instagram_handle, label: Instagram (nome visibile), type: string }
+      - { name: instagram_url, label: Instagram URL (vuoto = nascosto), type: string }
+      - { name: main_site_url, label: URL sito principale, type: string, required: true }
+      - { name: cv_url, label: URL del CV, type: string, required: true }
+      - { name: copyright, label: Testo footer, type: string }
+
+  - name: about_page
+    label: "about · Pagina About"
+    type: file
+    path: about/content/about.json
+    format: json
+    fields:
+      - &seo
+        name: seo
+        label: SEO
+        type: object
+        fields:
+          - { name: title, label: Titolo pagina (tab browser), type: string, required: true }
+          - { name: description, label: Meta description (Google), type: text, required: true }
+      - { name: eyebrow, label: Sopratitolo, type: string }
+      - { name: title, label: Titolo, type: string, required: true }
+      - { name: portrait, label: Foto profilo, type: image, required: true, options: { media: about_images } }
+      - { name: portrait_alt, label: Testo alternativo foto, type: string, required: true }
+      - { name: intro, label: Introduzione, type: text, required: true }
+      - name: background
+        label: Background (un paragrafo per voce)
+        type: text
+        list: true
+      - name: experience
+        label: Esperienza
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{when} · {what}"
+        fields: &timeline_fields
+          - { name: when, label: Periodo, type: string, required: true }
+          - { name: what, label: Ruolo / titolo, type: string, required: true }
+          - { name: where, label: Dove, type: string }
+          - { name: detail, label: Dettaglio, type: text }
+      - name: volunteering
+        label: Volontariato
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{when} · {what}"
+        fields: *timeline_fields
+      - name: education
+        label: Formazione
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{when} · {what}"
+        fields: *timeline_fields
+      - name: honors
+        label: Riconoscimenti
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{when} · {what}"
+        fields: *timeline_fields
+      - name: interests
+        label: Interessi
+        type: string
+        list: true
+
+  - name: about_projects
+    label: "about · Pagina Projects"
+    type: file
+    path: about/content/projects.json
+    format: json
+    fields:
+      - *seo
+      - { name: eyebrow, label: Sopratitolo, type: string }
+      - { name: title, label: Titolo, type: string, required: true }
+      - { name: intro, label: Introduzione, type: text }
+      - name: sections
+        label: Sezioni
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - { name: title, label: Titolo sezione, type: string, required: true }
+          - { name: anchor, label: Ancora URL (opzionale), type: string }
+          - name: cards
+            label: Progetti
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{title}"
+            fields:
+              - { name: title, label: Titolo, type: string, required: true }
+              - { name: description, label: Descrizione, type: text }
+              - { name: url, label: URL, type: string, required: true }
+              - name: icon
+                label: Icona
+                type: select
+                options:
+                  values:
+                    - { name: document, label: Documento / PDF }
+                    - { name: slides, label: Slide }
+                    - { name: github, label: GitHub }
+                    - { name: link, label: Link generico }
+              - { name: tag, label: Etichetta in alto (es. "PDF · 66 pages"), type: string }
+              - { name: meta, label: Nota in basso (data, fonte…), type: string }
+
+  - name: about_photos
+    label: "about · Pagina Photos"
+    type: file
+    path: about/content/photos.json
+    format: json
+    fields:
+      - *seo
+      - { name: eyebrow, label: Sopratitolo, type: string }
+      - { name: title, label: Titolo, type: string, required: true }
+      - name: banner
+        label: Foto banner (larga)
+        type: object
+        fields:
+          - &image { name: image, label: Immagine, type: image, options: { media: about_images } }
+          - &alt { name: alt, label: Testo alternativo, type: string }
+          - &caption { name: caption, label: Didascalia, type: string }
+      - name: gallery
+        label: Galleria
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{caption}"
+        fields:
+          - *image
+          - *alt
+          - *caption

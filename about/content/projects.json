@@ -1,0 +1,63 @@
+{
+  "seo": {
+    "title": "Antonio Giordano · Projects",
+    "description": "Antonio Giordano: university projects and GitHub repositories."
+  },
+  "eyebrow": "Projects",
+  "title": "Projects",
+  "intro": "University work and personal repositories.",
+  "sections": [
+    {
+      "title": "University",
+      "anchor": "university",
+      "cards": [
+        {
+          "title": "Software Engineering II – DevOps",
+          "description": "Software testing and DevOps project, University of Naples Federico II.",
+          "url": "https://drive.google.com/file/d/1E3WUanW6MrQ3mVMp4W5q2cAevvMV3F8_/view",
+          "icon": "document",
+          "tag": "PDF · 66 pages",
+          "meta": "28 March 2020"
+        },
+        {
+          "title": "Business process re-engineering for SERIARTE",
+          "description": "Information Systems project, developed together with fellow students.",
+          "url": "https://drive.google.com/file/d/16CKtniA9-j87Zi-UPQYLq7JufDRp6NIO/view",
+          "icon": "slides",
+          "tag": "Slides · 45",
+          "meta": "A.Y. 2016/2017"
+        }
+      ]
+    },
+    {
+      "title": "GitHub",
+      "anchor": "github",
+      "cards": [
+        {
+          "title": "TFM_AG",
+          "description": "Master’s thesis (TFM) repository, developed in Madrid during the Erasmus+ traineeship.",
+          "url": "https://github.com/Rubik90/TFM_AG",
+          "icon": "github",
+          "tag": "Rubik90/TFM_AG",
+          "meta": "GitHub"
+        },
+        {
+          "title": "EAV_draft",
+          "description": "This project could improve the green level in the public transportation.",
+          "url": "https://github.com/Rubik90/EAV_draft",
+          "icon": "github",
+          "tag": "Rubik90/EAV_draft",
+          "meta": "GitHub"
+        },
+        {
+          "title": "TheWeather",
+          "description": "This app tells you the weather!",
+          "url": "https://github.com/Rubik90/TheWeather",
+          "icon": "github",
+          "tag": "Rubik90/TheWeather",
+          "meta": "GitHub"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "seo": {
+    "title": "Antonio Giordano · Photos",
+    "description": "Antonio Giordano: photos."
+  },
+  "eyebrow": "Photos",
+  "title": "Photos",
+  "banner": {
+    "image": "/img/autoritratto.jpg",
+    "alt": "Self-portrait",
+    "caption": "Self-portrait"
+  },
+  "gallery": [
+    {
+      "image": "/img/sweet.jpg",
+      "alt": "Antonio with a child",
+      "caption": "sweet"
+    },
+    {
+      "image": "/img/family.jpg",
+      "alt": "Antonio with family",
+      "caption": "family"
+    },
+    {
+      "image": "/img/a-caso.jpg",
+      "alt": "Selfie with two children",
+      "caption": "random"
+    },
+    {
+      "image": "/img/arancione.jpg",
+      "alt": "Antonio with a dog",
+      "caption": "orange"
+    },
+    {
+      "image": "/img/me.jpg",
+      "alt": "Portrait of Antonio",
+      "caption": "me"
+    },
+    {
+      "image": "/img/home.jpg",
+      "alt": "Night view",
+      "caption": "home"
+    }
+  ]
+}
