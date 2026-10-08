@@ -17,7 +17,7 @@
       "when": "Jun 2021 – Jul 2026",
       "what": "Functional Safety Engineer",
       "where": "Kineton, Naples",
-      "detail": "Automotive functional safety under ISO 26262, aligned with ASPICE and OEM requirements (SS 7740): SW unit design and unit testing, peer reviews and code inspections (MISRA, static analysis); requirement-based test automation with ECU-TEST on HIL benches; timing and real-time analysis of safety mechanisms; SW integration requirements and architecture (SEooC, MICROSAR Safe, MCAL); DIA, Safety Plans, Safety Case and GSN argumentation, confirmation measures; FuSa, ASPICE and OEM audits; human-in-the-loop GenAI (RAG, agents) for compliance and analysis tasks."
+      "detail": "Automotive functional safety under ISO 26262, aligned with ASPICE and OEM requirements (SS 7740): SW unit design and unit testing, peer reviews and code inspections (MISRA, static analysis); requirement-based test automation with ECU-TEST; timing and real-time analysis of safety mechanisms; SW integration requirements and architecture (SEooC, MICROSAR Safe, MCAL); DIA, Safety Plans, Safety Case and GSN argumentation, confirmation measures; FuSa, ASPICE and OEM audits; human-in-the-loop GenAI (RAG, agents) for compliance and analysis tasks."
     },
     {
       "when": "Mar 2021 – Jun 2021",
