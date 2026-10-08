@@ -1,0 +1,11 @@
+{
+  "name": "antgio90-cv",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "pdf": "node make-pdf.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.56.1"
+  }
+}
