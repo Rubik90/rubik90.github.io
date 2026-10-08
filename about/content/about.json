@@ -7,7 +7,7 @@
   "title": "Antonio Giordano",
   "portrait": "/img/antonio.jpg",
   "portrait_alt": "Portrait of Antonio Giordano",
-  "intro": "My name is Antonio and I come from Campi Flegrei. I studied Computer Engineering at the University of Naples Federico II, graduating in 2021 after working on my AI thesis in Madrid, during an Erasmus+ traineeship, for healthcare purposes. During my university years I worked as an “Internet Crowd Worker” for Lionbridge and tutored high-school students in physics and mathematics. I then spent five years as a Functional Safety Engineer at Kineton (Naples), working on automotive and defence projects.",
+  "intro": "My name is Antonio and I come from Campi Flegrei. I studied Computer Engineering at the University of Naples Federico II, graduating in 2021 after working on my AI thesis in Madrid, during an Erasmus+ traineeship, for healthcare purposes. During my university years I worked as an “Internet Crowd Worker” for Lionbridge and tutored high-school students in physics and mathematics. I then spent five years as a Functional Safety Engineer in Naples, working on automotive and defence projects.",
   "background": [
     "Among the university courses that shaped me most are “Business Economics and Organisation”, “Information Systems” and “Big Data and Business Intelligence”: three courses that helped me improve my teamwork skills, both as a leader and as a team member.",
     "From 2010 to 2015 I volunteered with Freebacoli, a socio-cultural association working to promote the town of Bacoli, where I served as treasurer until I left for my studies. Its activities put me in daily contact with members from all walks of life and taught me how laws and public institutions are structured and how they work. In 2014 I directed the event presenting the association’s candidacy for the 2015 municipal elections, later won by Josi Gerardo Della Ragione, who became mayor of Bacoli."
@@ -58,8 +58,7 @@
     {
       "when": "2009 – 2012",
       "what": "Academic Merit Scholarship",
-      "where": "University of Naples Federico II",
-      "detail": ""
+      "where": "University of Naples Federico II"
     }
   ],
   "interests": [
