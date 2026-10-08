@@ -7,8 +7,13 @@
   "eyebrow": "FUNCTIONAL SAFETY ENGINEER",
   "first_name": "Antonio",
   "last_name": "Giordano",
-  "bio": "5+ years of experience in automotive and defence. Safety analysis, requirements, safety cases and software verification.",
-  "expertise": ["ISO 26262", "IEC 61508", "MIL-STD-882E", "ASPICE"],
+  "bio": "5+ years of Functional Safety experience in automotive. ISO 26262 work products, SW verification and HIL test automation, aligned with ASPICE and OEM requirements.",
+  "expertise": [
+    "ISO 26262",
+    "ASPICE",
+    "SS 7740",
+    "IEC 61508"
+  ],
   "certification": {
     "title": "TÜV SÜD · Level 1",
     "detail": "ISO 26262:2018 & IEC EN 61508:2010"

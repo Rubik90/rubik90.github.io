@@ -1,0 +1,54 @@
+# Rigenera il CV PDF quando cambiano content/cv.json o il template, poi lo committa.
+# Il commit del PDF fa ripartire il deploy Vercel → antgio90.it/Antonio-Giordano-CV.pdf aggiornato.
+name: CV PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - content/cv.json
+      - cv/**
+      - .github/workflows/cv-pdf.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cv-pdf
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cv/package-lock.json
+
+      - name: Install Playwright + Chromium
+        working-directory: cv
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Build PDF
+        working-directory: cv
+        run: npm run pdf
+
+      - name: Commit PDF if changed
+        run: |
+          if git diff --quiet -- public/Antonio-Giordano-CV.pdf; then
+            echo "PDF invariato"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/Antonio-Giordano-CV.pdf
+          git commit -m "CV: rigenerato PDF da content/cv.json"
+          git pull --rebase
+          git push

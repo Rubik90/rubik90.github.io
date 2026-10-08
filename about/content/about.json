@@ -7,57 +7,57 @@
   "title": "Antonio Giordano",
   "portrait": "/img/antonio.jpg",
   "portrait_alt": "Portrait of Antonio Giordano",
-  "intro": "My name is Antonio and I come from Campi Flegrei. I studied Computer Engineering at the University of Naples Federico II, graduating in 2021 after working on my AI thesis in Madrid, during an Erasmus+ traineeship, for healthcare purposes. During my university years I worked as an “Internet Crowd Worker” for Lionbridge and tutored high-school students in physics and mathematics. I then spent five years as a Functional Safety Engineer in Naples, working on automotive and defence projects.",
+  "intro": "My name is Antonio and I come from Campi Flegrei. I studied Computer Engineering at the University of Naples Federico II, graduating in 2021 after working on my AI thesis in Madrid, during an Erasmus+ traineeship, for healthcare purposes. During my university years I worked as an “Internet Crowd Worker” for Lionbridge and tutored high-school students in physics and mathematics. I then spent five years as a Functional Safety Engineer in Naples, working on automotive projects.",
   "background": [
     "Among the university courses that shaped me most are “Business Economics and Organisation”, “Information Systems” and “Big Data and Business Intelligence”: three courses that helped me improve my teamwork skills, both as a leader and as a team member.",
     "From 2010 to 2015 I volunteered with Freebacoli, a socio-cultural association working to promote the town of Bacoli, where I served as treasurer until I left for my studies. Its activities put me in daily contact with members from all walks of life and taught me how laws and public institutions are structured and how they work. In 2014 I directed the event presenting the association’s candidacy for the 2015 municipal elections, later won by Josi Gerardo Della Ragione, who became mayor of Bacoli."
   ],
   "experience": [
     {
-      "when": "2021 – 2026",
+      "when": "Jun 2021 – Jul 2026",
       "what": "Functional Safety Engineer",
       "where": "Kineton, Naples",
-      "detail": "Automotive and defence functional safety under ISO 26262 and MIL‑STD‑882E, aligned with ASPICE and OEM requirements (SS 7740): Safety Plans, Safety Cases (GSN), DIAs; software FMEA and FTA on an On-Board Charger; PHL, PHA, SRHA, SSHA and HAZOP for defence systems; embedded SW verification (SEooC, MICROSAR Safe, MCAL, MISRA, timing analysis); FuSa, ASPICE and OEM audits; human-in-the-loop GenAI (RAG, agents) for compliance workflows."
+      "detail": "Automotive functional safety under ISO 26262, aligned with ASPICE and OEM requirements (SS 7740): SW unit design and unit testing, peer reviews and code inspections (MISRA, static analysis); requirement-based test automation with ECU-TEST on HIL benches; timing and real-time analysis of safety mechanisms; SW integration requirements and architecture (SEooC, MICROSAR Safe, MCAL); DIA, Safety Plans, Safety Case and GSN argumentation, confirmation measures; FuSa, ASPICE and OEM audits; human-in-the-loop GenAI (RAG, agents) for compliance and analysis tasks."
     },
     {
-      "when": "2021",
-      "what": "Automotive Software Intern",
+      "when": "Mar 2021 – Jun 2021",
+      "what": "Automotive Internship",
       "where": "Kineton, Naples",
-      "detail": "Embedded C/C++ firmware modules, build systems and debugging tooling; system/software integration requirements."
+      "detail": "C/C++, build systems and debug tools, integration requirements."
     }
   ],
   "volunteering": [
     {
-      "when": "2010 – 2015",
-      "what": "Community Volunteer",
+      "when": "Sep 2010 – May 2015",
+      "what": "Volunteer",
       "where": "Freebacoli, Bacoli (Naples)",
       "detail": "Community engagement, youth mentorship and civic transparency initiatives."
     }
   ],
   "education": [
     {
-      "when": "2015 – 2021",
+      "when": "Sep 2020 – Feb 2021",
+      "what": "Erasmus+ Trainee",
+      "where": "Universidad Politécnica de Madrid (ETSISI)",
+      "detail": "ML application development for Emotion Recognition with Azure, GitHub, Python, Keras, TensorFlow and OpenFace. Final mark: Sobresaliente (10/10)."
+    },
+    {
+      "when": "Sep 2015 – Mar 2021",
       "what": "Master’s Degree in Computer Engineering",
       "where": "University of Naples Federico II",
-      "detail": "Thesis: “Multimodal Analysis of Emotions in Multimedia”, an end-to-end emotion recognition ML application on Microsoft Azure and Google Colab. Final grade: 107/110."
+      "detail": "Thesis: “Multimodal analysis of emotions in multimedia”, an emotion recognition application developed on Azure/Colab. Final mark: 107/110."
     },
     {
-      "when": "2020 – 2021",
-      "what": "Erasmus+ Traineeship — Machine Learning & Computer Vision",
-      "where": "Universidad Politécnica de Madrid (ETSISI)",
-      "detail": "Facial emotion recognition pipeline with Python, Keras, TensorFlow, OpenFace and Azure. Final grade: Sobresaliente (10/10 with distinction)."
-    },
-    {
-      "when": "2009 – 2015",
+      "when": "Sep 2009 – Jan 2015",
       "what": "Bachelor’s Degree in Computer Engineering",
       "where": "University of Naples Federico II",
-      "detail": "Thesis: “NoSQL Technologies: Sesame”, comparing graph database architectures with a focus on the Sesame RDF database manager. Final grade: 96/110."
+      "detail": "Thesis: “NoSQL technologies: Sesame”, focused on the Sesame database manager implementation. Final mark: 96/110."
     }
   ],
   "honors": [
     {
       "when": "2009 – 2012",
-      "what": "Academic Merit Scholarship",
+      "what": "Scholarship Winner",
       "where": "University of Naples Federico II"
     }
   ],

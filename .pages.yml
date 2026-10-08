@@ -8,11 +8,6 @@ media:
     output: /img
     categories: [image]
     rename: safe
-  - name: files
-    label: File (antgio90.it · CV)
-    input: public
-    output: /
-    categories: [document]
 
 content:
   # ───────────────────────── antgio90.it ─────────────────────────
@@ -77,6 +72,94 @@ content:
         fields:
           - { name: left, label: Sinistra, type: string }
           - { name: right, label: Destra, type: string }
+
+  - name: cv
+    label: "CV (PDF generato in automatico)"
+    type: file
+    path: content/cv.json
+    format: json
+    fields:
+      - name: pdf
+        label: Metadati PDF
+        type: object
+        fields:
+          - { name: title, label: Titolo documento, type: string }
+          - { name: subject, label: Oggetto, type: string }
+      - { name: name, label: Nome e cognome, type: string, required: true }
+      - { name: website, label: Sito web (sotto il nome), type: string }
+      - name: contact
+        label: Contatti (colonna destra)
+        type: object
+        fields:
+          - { name: address, label: "Indirizzo (vuoto = non pubblicato)", type: string }
+          - { name: city, label: CAP / città, type: string }
+          - { name: phone, label: Telefono (vuoto = nascosto), type: string }
+          - { name: email, label: Email, type: string, required: true }
+      - name: experience
+        label: Experience
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{period} · {role}"
+        fields: &cv_entry
+          - { name: org, label: "Azienda / istituto (grassetto)", type: string, required: true }
+          - { name: place, label: Città, type: string }
+          - { name: role, label: "Ruolo / titolo (corsivo)", type: string }
+          - { name: period, label: "Periodo (es. JUN 2021 - JUL 2026)", type: string }
+          - name: bullets
+            label: Punti elenco
+            type: text
+            list: true
+            description: "Formattazione: **grassetto**, *corsivo*, [testo](https://link)"
+          - name: lines
+            label: Righe semplici (senza pallino)
+            type: string
+            list: true
+      - name: education
+        label: Education
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{period} · {role}"
+        fields: *cv_entry
+      - name: volunteering
+        label: Volunteering
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{period} · {org}"
+        fields: *cv_entry
+      - name: skills
+        label: Skills (separate da "|")
+        type: string
+        list: true
+      - name: awards
+        label: Awards
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Titolo (grassetto), type: string, required: true }
+          - { name: period, label: Periodo, type: string }
+      - name: languages
+        label: Languages
+        type: object
+        list: true
+        fields:
+          - { name: label, label: "Lingua e livello (es. English C1)", type: string, required: true }
+          - { name: url, label: Link certificato, type: string }
+      - name: certifications
+        label: Certificazioni
+        type: object
+        fields:
+          - { name: title, label: Titolo sezione, type: string }
+          - name: items
+            label: Voci
+            type: string
+            list: true
+      - { name: declaration, label: Declaration (GDPR), type: text }
 
   # ───────────────────────── about.antgio90.it ─────────────────────────
   - name: about_site
