@@ -29,7 +29,7 @@ Ogni "Save" crea un commit e Vercel ripubblica in circa 10 secondi.
 
 **Foto:** dalla sezione Media di Pages CMS ("Foto"), poi selezionale nel campo immagine. Le dimensioni vengono lette in automatico durante il build.
 
-**CV:** modifica la voce "CV" in Pages CMS (o `content/cv.json`). Al salvataggio la GitHub Action *CV PDF* rigenera `public/Antonio-Giordano-CV.pdf` e lo committa (≈1–2 min), poi Vercel lo pubblica. L'URL resta `antgio90.it/Antonio-Giordano-CV.pdf`. Non caricare il PDF a mano: verrebbe sovrascritto.
+**CV:** modifica la voce "CV" in Pages CMS (o `content/cv.json`). Al salvataggio la GitHub Action *CV PDF* rigenera `public/Antonio-Giordano-CV.pdf` e lo committa (≈1–2 min), poi Vercel lo pubblica. Il sito linka sempre una URL versionata (`Antonio-Giordano-CV-<data>.pdf?v=<hash>`), così nessun browser o telefono mostra una copia vecchia. Link stabile da condividere: `antgio90.it/cv` (porta sempre all'ultima versione). Non caricare il PDF a mano: verrebbe sovrascritto.
 Nei testi del CV puoi usare `**grassetto**`, `*corsivo*`, `[testo](https://link)`. Stato della generazione: tab *Actions* del repo su GitHub.
 
 ## Rete di sicurezza

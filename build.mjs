@@ -1,9 +1,29 @@
 // Build for antgio90.it — content/profile.json + public/ → dist/
 // Zero dependencies. Run: node build.mjs
-import { readFileSync, writeFileSync, rmSync, mkdirSync, cpSync } from 'node:fs';
+import { readFileSync, writeFileSync, rmSync, mkdirSync, cpSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 
 const OUT = 'dist';
 const data = JSON.parse(readFileSync('content/profile.json', 'utf8'));
+
+// ---------- CV: versioned URL ----------
+// Every new PDF gets a new URL (date in the filename + content hash), so no browser,
+// phone PDF viewer or "already downloaded" file can show an old version.
+// Stable entry points: /cv (always redirects to the latest) and /Antonio-Giordano-CV.pdf (latest content).
+const CV_FILE = 'Antonio-Giordano-CV.pdf';
+let cvHref = CV_FILE;
+let cvVersioned = null;
+if (existsSync(`public/${CV_FILE}`)) {
+  const pdf = readFileSync(`public/${CV_FILE}`);
+  const hash = createHash('sha256').update(pdf).digest('hex').slice(0, 8);
+  const m = pdf.toString('latin1').match(/CreationDate\s*\(D:(\d{4})(\d{2})(\d{2})/);
+  const date = m ? `${m[1]}-${m[2]}-${m[3]}` : new Date().toISOString().slice(0, 10);
+  cvVersioned = `Antonio-Giordano-CV-${date}.pdf`;
+  cvHref = `${cvVersioned}?v=${hash}`;
+}
+// Any link in content pointing to the CV (relative, /, or absolute antgio90.it) uses the versioned URL.
+const resolveUrl = url => /^(\.?\/)?Antonio-Giordano-CV\.pdf$|^\/?cv\/?$|^https?:\/\/(www\.)?antgio90\.it\/(Antonio-Giordano-CV\.pdf|cv\/?)$/i.test(url || '') ? cvHref : url;
+data.links = (data.links || []).map(l => ({ ...l, url: resolveUrl(l.url) }));
 
 // ---------- helpers ----------
 const esc = s => (s == null ? '' : String(s))
@@ -90,4 +110,11 @@ rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 cpSync('public', OUT, { recursive: true });
 writeFileSync(`${OUT}/index.html`, html);
+if (cvVersioned) {
+  cpSync(`public/${CV_FILE}`, `${OUT}/${cvVersioned}`);
+  const target = `/${cvHref}`;
+  mkdirSync(`${OUT}/cv`, { recursive: true });
+  writeFileSync(`${OUT}/cv/index.html`, `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Antonio Giordano · CV</title><meta http-equiv="refresh" content="0;url=${target}"><script>location.replace(${JSON.stringify(target)})</script></head><body><a href="${target}">Antonio Giordano · Curriculum vitae (PDF)</a></body></html>\n`);
+  console.log(`✔ CV → /${cvHref}  (alias: /cv, /${CV_FILE})`);
+}
 console.log(`✔ antgio90.it → ${OUT}/index.html`);
